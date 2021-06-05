@@ -1,0 +1,40 @@
+.l-auth-reg {
+  &__logo {
+    width: 240px;
+    height: 50px;
+    margin: 0 auto;
+  }
+
+  &__input {
+    height: 36px;
+    width: 340px;
+    padding: 0 10px;
+    border: none;
+    border-bottom: 1px solid #000;
+    font-size: 18px;
+    line-height: 36px;
+    &::placeholder {
+      font-size: 18px;
+      line-height: 36px;
+    }
+    &:focus {
+      border-bottom-width: 2px;
+      outline: none;
+    }
+  }
+
+  &__redirect {
+    margin-top: 12px;
+    font-size: 13px;
+    text-align: center;
+    &-text {
+      color: #ccc;
+    }
+    &-link {
+      color: #0437ba;
+      &:hover {
+        color: #4174f5;
+      }
+    }
+  }
+}
