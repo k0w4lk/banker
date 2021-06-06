@@ -2,8 +2,9 @@ import styles from './Authorization.module.scss';
 import authLogo from './../../assets/images/logo.svg';
 import { NavLink, withRouter } from 'react-router-dom';
 import './../../assets/styles/main.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import firebase from 'firebase';
+import { login } from '../../store/reducers/authReducer';
 
 const Authorization = (props) => {
   const [user, setUser] = useState('');
@@ -11,7 +12,6 @@ const Authorization = (props) => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [hasAccount, setHasAccount] = useState(false);
 
   const clearInputs = () => {
     setEmail('');
@@ -34,42 +34,41 @@ const Authorization = (props) => {
   const handleLogin = (e) => {
     e.preventDefault();
     clearErrors();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        if (user) props.history.push('/main');
-      })
-      .catch((err) => {
-        switch (err.code) {
-          case 'auth/invalid-email':
-          case 'auth/user-disabled':
-          case 'auth/user-not-found':
-            setEmailError(err.message);
-            break;
-          case 'auth/wrong-password':
-            setPasswordError(err.message);
-            break;
-          default:
-            break;
-        }
-      });
+    login(email, password);
+    // .then((user) => {
+    //   console.log(user);
+    //   if (user) props.history.push('/main');
+    // })
+    // .catch((err) => {
+    //   switch (err.code) {
+    //     case 'auth/invalid-email':
+    //     case 'auth/user-disabled':
+    //     case 'auth/user-not-found':
+    //       setEmailError(err.message);
+    //       break;
+    //     case 'auth/wrong-password':
+    //       setPasswordError(err.message);
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // });
   };
 
-  // const authListener = () => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       clearInputs();
-  //       setUser(user);
-  //     } else {
-  //       setUser('');
-  //     }
-  //   });
-  // };
+  const authListener = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        clearInputs();
+        setUser(user);
+      } else {
+        setUser('');
+      }
+    });
+  };
 
-  // useEffect(() => {
-  //   authListener();
-  // }, []);
+  useEffect(() => {
+    authListener();
+  }, []);
 
   return (
     <div className={styles.authorization__wrapper}>

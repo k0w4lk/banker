@@ -2,12 +2,7 @@ import firebase from 'firebase';
 
 const Profile = () => {
   const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then((res) => {
-        console.log(res);
-      });
+    firebase.auth().signOut();
   };
   return <button onClick={handleLogout}>ВЫЙТИ</button>;
 };
