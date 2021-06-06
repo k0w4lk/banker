@@ -1,14 +1,8 @@
-import firebase from 'firebase';
+import { AuthContext } from '../../../context/authContext.js';
+import { useContext } from 'react';
 
 const Profile = () => {
-  const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then((res) => {
-        console.log(res);
-      });
-  };
+  const { handleLogout } = useContext(AuthContext);
   return <button onClick={handleLogout}>ВЫЙТИ</button>;
 };
 
