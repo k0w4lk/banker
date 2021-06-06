@@ -4,16 +4,30 @@ import firebase from 'firebase';
 
 export const AuthContext = createContext();
 
+const WEAK_PASSWORD_ERROR =
+  'Пароль должен состоять не менее чем из шести символов';
+const EMAIL_ALREADY_IN_USE_ERROR =
+  'Данный адрес электронной почты уже зарегистрирован';
+const INVALID_EMAIL_ERROR = 'Неверный элекронный адрес';
+const USER_NOT_FOUND_ERROR = 'Пользователь не найден';
+const USER_DISABLED_ERROR = 'Пользователь заблокирован';
+const WRONG_PASSWORD_ERROR = 'Неверный адрес электронной почты или пароль';
+const SOME_ERROR = 'Произошла ошибка';
+
 const Auth = (props) => {
   const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginEmail, setLoginEmail] = useState('');
+  const [registrationEmail, setRegistrationEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [registrationPassword, setRegistrationPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   const clearInputs = () => {
-    setEmail('');
-    setPassword('');
+    setLoginEmail('');
+    setRegistrationEmail('');
+    setLoginPassword('');
+    setRegistrationPassword('');
   };
 
   const clearErrors = () => {
@@ -21,29 +35,38 @@ const Auth = (props) => {
     setPasswordError('');
   };
 
-  const onEmailInputHandler = (e) => setEmail(e.target.value);
+  const onLoginEmailInputHandler = (e) => setLoginEmail(e.target.value);
+  const onRegistrationEmailInputHandler = (e) =>
+    setRegistrationEmail(e.target.value);
 
-  const onPaswordInputHandler = (e) => {
-    setPassword(e.currentTarget.value);
-  };
+  const onLoginPaswordInputHandler = (e) =>
+    setLoginPassword(e.currentTarget.value);
+  const onRegistrationPaswordInputHandler = (e) =>
+    setRegistrationPassword(e.currentTarget.value);
 
   const handleLogin = (e) => {
     e.preventDefault();
     clearErrors();
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(loginEmail, loginPassword)
       .catch((err) => {
         switch (err.code) {
           case 'auth/invalid-email':
+            setEmailError(INVALID_EMAIL_ERROR);
+            break;
           case 'auth/user-disabled':
+            setEmailError(USER_DISABLED_ERROR);
+            break;
           case 'auth/user-not-found':
-            setEmailError(err.message);
+            setEmailError(USER_NOT_FOUND_ERROR);
             break;
           case 'auth/wrong-password':
-            setPasswordError(err.message);
+            setPasswordError(WRONG_PASSWORD_ERROR);
             break;
           default:
+            setEmailError(SOME_ERROR);
+            setPasswordError(SOME_ERROR);
             break;
         }
       });
@@ -54,20 +77,24 @@ const Auth = (props) => {
     clearErrors();
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(registrationEmail, registrationPassword)
       .then((user) => {
         if (user) props.history.push('/main');
       })
       .catch((err) => {
         switch (err.code) {
-          case 'auth/email-alreadyIn-use':
+          case 'auth/email-already-in-use':
+            setEmailError(EMAIL_ALREADY_IN_USE_ERROR);
+            break;
           case 'auth/invalid-email':
-            setEmailError(err.message);
+            setEmailError(INVALID_EMAIL_ERROR);
             break;
           case 'auth/weak-password':
-            setPasswordError(err.message);
+            setPasswordError(WEAK_PASSWORD_ERROR);
             break;
           default:
+            setEmailError(SOME_ERROR);
+            setPasswordError(SOME_ERROR);
             break;
         }
       });
@@ -97,15 +124,22 @@ const Auth = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        email,
-        password,
+        user,
+        loginEmail,
+        registrationEmail,
+        loginPassword,
+        registrationPassword,
         emailError,
         passwordError,
-        onEmailInputHandler,
-        onPaswordInputHandler,
+        onLoginEmailInputHandler,
+        onRegistrationEmailInputHandler,
+        onLoginPaswordInputHandler,
+        onRegistrationPaswordInputHandler,
         handleLogin,
         handleRegistration,
         handleLogout,
+        clearErrors,
+        clearInputs,
       }}
     >
       {props.children}

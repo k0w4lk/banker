@@ -23,6 +23,13 @@
     }
   }
 
+  &__error-text {
+    font-size: 12px;
+    width: 340px;
+    text-align: justify;
+    color: rgb(187, 36, 36);
+  }
+
   &__redirect {
     margin-top: 12px;
     font-size: 13px;

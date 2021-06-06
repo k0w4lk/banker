@@ -7,13 +7,15 @@ import { useContext } from 'react';
 
 const Registration = (props) => {
   const {
-    onEmailInputHandler,
-    email,
-    password,
-    onPaswordInputHandler,
+    onRegistrationEmailInputHandler,
+    registrationEmail,
+    registrationPassword,
+    onRegistrationPaswordInputHandler,
     passwordError,
     handleRegistration,
     emailError,
+    clearErrors,
+    clearInputs,
   } = useContext(AuthContext);
   return (
     <div className={styles.registration__wrapper}>
@@ -29,23 +31,27 @@ const Registration = (props) => {
           />
           <input className="l-auth-reg__input" type="text" placeholder="РОЛЬ" />
           <input
-            onChange={onEmailInputHandler}
-            value={email}
+            onChange={onRegistrationEmailInputHandler}
+            value={registrationEmail}
             className="l-auth-reg__input"
-            type="text"
-            placeholder="ЛОГИН"
+            type="email"
+            placeholder="ЭЛЕКТРОННАЯ ПОЧТА"
             required
           />
-          {emailError ? <p>{emailError}</p> : null}
+          {emailError ? (
+            <p className="l-auth-reg__error-text">{emailError}</p>
+          ) : null}
           <input
-            onChange={onPaswordInputHandler}
-            value={password}
+            onChange={onRegistrationPaswordInputHandler}
+            value={registrationPassword}
             className="l-auth-reg__input"
             type="password"
             placeholder="ПАРОЛЬ"
             required
           />
-          {passwordError ? <p>{passwordError}</p> : null}
+          {passwordError ? (
+            <p className="l-auth-reg__error-text">{passwordError}</p>
+          ) : null}
           <input
             className="l-auth-reg__input"
             type="password"
@@ -62,7 +68,14 @@ const Registration = (props) => {
           <span className={styles.registrationForm__redirect}>
             УЖЕ ЗАРЕГИСТРИРОВАНЫ?&nbsp;
           </span>
-          <NavLink className={styles.registrationForm__link} to={'/'}>
+          <NavLink
+            onClick={() => {
+              clearErrors();
+              clearInputs();
+            }}
+            className={styles.registrationForm__link}
+            to={'/'}
+          >
             ВОЙТИ
           </NavLink>
         </div>

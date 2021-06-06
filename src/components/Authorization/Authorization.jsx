@@ -7,13 +7,14 @@ import { useContext } from 'react';
 
 const Authorization = (props) => {
   const {
-    onEmailInputHandler,
-    email,
-    password,
-    onPaswordInputHandler,
+    onLoginEmailInputHandler,
+    loginEmail,
+    loginPassword,
+    onLoginPaswordInputHandler,
     passwordError,
     handleLogin,
     emailError,
+    clearErrors,
   } = useContext(AuthContext);
   return (
     <div className={styles.authorization__wrapper}>
@@ -22,21 +23,25 @@ const Authorization = (props) => {
         <h1 className={styles.authorizationForm__heading}>АВТОРИЗАЦИЯ</h1>
         <form className={styles.authorizationForm__form} action="">
           <input
-            onChange={onEmailInputHandler}
-            value={email}
+            onChange={onLoginEmailInputHandler}
+            value={loginEmail}
             className="l-auth-reg__input"
-            type="text"
-            placeholder="ЛОГИН"
+            type="email"
+            placeholder="ЭЛЕКТРОННАЯ ПОЧТА"
           />
-          {emailError ? <p>{emailError}</p> : null}
+          {emailError ? (
+            <p className="l-auth-reg__error-text">{emailError}</p>
+          ) : null}
           <input
-            value={password}
-            onChange={onPaswordInputHandler}
+            value={loginPassword}
+            onChange={onLoginPaswordInputHandler}
             className="l-auth-reg__input"
             type="password"
             placeholder="ПАРОЛЬ"
           />
-          {passwordError ? <p>{passwordError}</p> : null}
+          {passwordError ? (
+            <p className="l-auth-reg__error-text">{passwordError}</p>
+          ) : null}
           <button
             onClick={handleLogin}
             className={styles.authorizationForm__button}
@@ -46,7 +51,11 @@ const Authorization = (props) => {
         </form>
         <div className="l-auth-reg__redirect">
           <span className="l-auth-reg__text">НЕТ УЧЕТНОЙ ЗАПИСИ?&nbsp;</span>
-          <NavLink className="l-auth-reg__link" to="/registration">
+          <NavLink
+            onClick={clearErrors}
+            className="l-auth-reg__link"
+            to="/registration"
+          >
             СОЗДАТЬ
           </NavLink>
         </div>
