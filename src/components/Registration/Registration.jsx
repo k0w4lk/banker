@@ -1,61 +1,20 @@
 import styles from './Registration.module.scss';
 import authLogo from './../../assets/images/logo.svg';
 import './../../assets/styles/main.scss';
-import { useState } from 'react';
-import firebase from 'firebase';
-import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext.js';
+import { useContext } from 'react';
 
 const Registration = (props) => {
-  //const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  //const [hasAccount, setHasAccount] = useState(false);
-
-  const clearInputs = () => {
-    setEmail('');
-    setPassword('');
-  };
-
-  const clearErrors = () => {
-    setEmailError('');
-    setPasswordError('');
-  };
-
-  const onEmailInputHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const onPaswordInputHandler = (e) => {
-    setPassword(e.currentTarget.value);
-  };
-
-  const handleRegistration = (e) => {
-    e.preventDefault();
-    clearErrors();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        if (user) props.history.push('/main');
-      })
-      .catch((err) => {
-        switch (err.code) {
-          case 'auth/email-alreadyIn-use':
-          case 'auth/invalid-email':
-            setEmailError(err.message);
-            break;
-          case 'auth/weak-password':
-            setPasswordError(err.message);
-            break;
-          default:
-            break;
-        }
-      });
-  };
-
+  const {
+    onEmailInputHandler,
+    email,
+    password,
+    onPaswordInputHandler,
+    passwordError,
+    handleRegistration,
+    emailError,
+  } = useContext(AuthContext);
   return (
     <div className={styles.registration__wrapper}>
       <div className={styles.registrationForm__wrapper}>
@@ -112,4 +71,4 @@ const Registration = (props) => {
   );
 };
 
-export default withRouter(Registration);
+export default Registration;

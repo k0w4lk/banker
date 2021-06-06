@@ -1,76 +1,20 @@
 import styles from './Authorization.module.scss';
 import authLogo from './../../assets/images/logo.svg';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './../../assets/styles/main.scss';
-import { useState } from 'react';
-import firebase from 'firebase';
+import { AuthContext } from '../../context/authContext.js';
+import { useContext } from 'react';
 
 const Authorization = (props) => {
-  const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [hasAccount, setHasAccount] = useState(false);
-
-  const clearInputs = () => {
-    setEmail('');
-    setPassword('');
-  };
-
-  const clearErrors = () => {
-    setEmailError('');
-    setPasswordError('');
-  };
-
-  const onEmailInputHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const onPaswordInputHandler = (e) => {
-    setPassword(e.currentTarget.value);
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    clearErrors();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        if (user) props.history.push('/main');
-      })
-      .catch((err) => {
-        switch (err.code) {
-          case 'auth/invalid-email':
-          case 'auth/user-disabled':
-          case 'auth/user-not-found':
-            setEmailError(err.message);
-            break;
-          case 'auth/wrong-password':
-            setPasswordError(err.message);
-            break;
-          default:
-            break;
-        }
-      });
-  };
-
-  // const authListener = () => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       clearInputs();
-  //       setUser(user);
-  //     } else {
-  //       setUser('');
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   authListener();
-  // }, []);
-
+  const {
+    onEmailInputHandler,
+    email,
+    password,
+    onPaswordInputHandler,
+    passwordError,
+    handleLogin,
+    emailError,
+  } = useContext(AuthContext);
   return (
     <div className={styles.authorization__wrapper}>
       <div className={styles.authorizationForm__wrapper}>
@@ -111,4 +55,4 @@ const Authorization = (props) => {
   );
 };
 
-export default withRouter(Authorization);
+export default Authorization;
