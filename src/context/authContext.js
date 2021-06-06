@@ -4,15 +4,20 @@ import firebase from 'firebase';
 
 export const AuthContext = createContext();
 
-const WEAK_PASSWORD_ERROR =
+export const WEAK_PASSWORD_ERROR =
   'Пароль должен состоять не менее чем из шести символов';
-const EMAIL_ALREADY_IN_USE_ERROR =
+export const EMAIL_ALREADY_IN_USE_ERROR =
   'Данный адрес электронной почты уже зарегистрирован';
-const INVALID_EMAIL_ERROR = 'Неверный элекронный адрес';
-const USER_NOT_FOUND_ERROR = 'Пользователь не найден';
-const USER_DISABLED_ERROR = 'Пользователь заблокирован';
-const WRONG_PASSWORD_ERROR = 'Неверный адрес электронной почты или пароль';
-const SOME_ERROR = 'Произошла ошибка';
+export const INVALID_EMAIL_ERROR = 'Неверный элекронный адрес';
+export const USER_NOT_FOUND_ERROR = 'Пользователь не найден';
+export const USER_DISABLED_ERROR = 'Пользователь заблокирован';
+export const WRONG_PASSWORD_ERROR =
+  'Неверный адрес электронной почты или пароль';
+export const SOME_ERROR = 'Произошла ошибка';
+export const REQUIRED_ERROR = 'Обязательное поле';
+export const PASSWORD_MISMATCH_ERROR = 'Пароли должны совпадать';
+export const MAX_NAME_LENGTH = 20;
+export const MAX_SURNAME_LENGTH = 25;
 
 const Auth = (props) => {
   const [user, setUser] = useState('');
@@ -72,12 +77,11 @@ const Auth = (props) => {
       });
   };
 
-  const handleRegistration = (e) => {
-    e.preventDefault();
+  const handleRegistration = (email, password) => {
     clearErrors();
     firebase
       .auth()
-      .createUserWithEmailAndPassword(registrationEmail, registrationPassword)
+      .createUserWithEmailAndPassword(email, password)
       .then((user) => {
         if (user) props.history.push('/main');
       })

@@ -8,37 +8,33 @@
     background-size: cover;
   }
   &Form {
-    &__wrapper {
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      padding: 30px 60px 40px;
-      margin-left: auto;
-      margin-right: 40px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.15);
-    }
     &__heading {
       margin-top: 30px;
       font-size: 28px;
       line-height: 34px;
       font-weight: 400;
     }
+    &__input {
+      margin-top: 5px;
+    }
     &__form {
-      display: flex;
-      flex-direction: column;
-      margin-top: 30px;
+      display: grid;
+      grid-template: max-content / repeat(2, 300px);
+      grid-gap: 20px;
+      grid-auto-rows: max-content;
     }
     &__button {
       background-color: #44d9e6;
       border: none;
-      margin-top: 40px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      width: max-content;
+      margin: 0 auto;
       color: #fff;
       border-radius: 4px;
       font-weight: bold;
       font-size: 22px;
-      padding: 10px 0;
+      padding: 10px;
       cursor: pointer;
       &:hover {
         background-color: #50bbc5;
