@@ -1,5 +1,6 @@
 import styles from './Registration.module.scss';
 import authLogo from './../../assets/images/logo.svg';
+import classNames from 'classnames';
 import './../../assets/styles/main.scss';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext.js';
@@ -19,28 +20,18 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
-  NativeSelect,
   Select,
   TextField,
 } from '@material-ui/core';
 
 const Registration = (props) => {
-  const {
-    onRegistrationEmailInputHandler,
-    registrationEmail,
-    registrationPassword,
-    onRegistrationPaswordInputHandler,
-    passwordError,
-    handleRegistration,
-    emailError,
-    clearErrors,
-    clearInputs,
-  } = useContext(AuthContext);
+  const { handleRegistration, emailError, clearErrors, isAuthenticating } =
+    useContext(AuthContext);
   return (
-    <div className={styles.registration__wrapper}>
+    <div className="l-auth-reg__wrapper">
       <div className="l-auth-reg__form">
         <img src={authLogo} className="l-auth-reg__logo" alt="auth-logo" />
-        <h1 className={styles.registrationForm__heading}>РЕГИСТРАЦИЯ</h1>
+        <h1 className="l-auth-reg__heading">РЕГИСТРАЦИЯ</h1>
         <Formik
           initialValues={{
             name: '',
@@ -74,16 +65,12 @@ const Registration = (props) => {
               .oneOf([Yup.ref('password'), null], PASSWORD_MISMATCH_ERROR),
             role: Yup.string().required(REQUIRED_ERROR),
           })}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values) => {
             handleRegistration(values.email, values.password);
-            setSubmitting(false);
           }}
         >
           {(props) => (
-            <form
-              className={styles.registrationForm__form}
-              onSubmit={props.handleSubmit}
-            >
+            <form className={styles.form} onSubmit={props.handleSubmit}>
               <TextField
                 error={props.touched.name && props.errors.name}
                 label="ИМЯ"
@@ -98,7 +85,6 @@ const Registration = (props) => {
               />
               <TextField
                 error={props.touched.surname && props.errors.surname}
-                className={styles.registrationForm__input}
                 label="ФАМИЛИЯ"
                 value={props.values.surname}
                 onChange={props.handleChange}
@@ -109,10 +95,7 @@ const Registration = (props) => {
                     : null
                 }
               />
-              <FormControl
-                className={styles.registrationForm__input}
-                error={props.touched.role && props.errors.role}
-              >
+              <FormControl error={props.touched.role && props.errors.role}>
                 <InputLabel htmlFor="registation-role-picker">РОЛЬ</InputLabel>
                 <Select
                   placeholder="РОЛЬ"
@@ -140,7 +123,6 @@ const Registration = (props) => {
                 error={
                   emailError || (props.touched.email && props.errors.email)
                 }
-                className={styles.registrationForm__input}
                 value={props.values.email}
                 onChange={props.handleChange}
                 onFocus={clearErrors}
@@ -155,7 +137,6 @@ const Registration = (props) => {
               {}
               <TextField
                 error={props.touched.password && props.errors.password}
-                className={styles.registrationForm__input}
                 value={props.values.password}
                 type="password"
                 label="ПАРОЛЬ"
@@ -168,7 +149,6 @@ const Registration = (props) => {
                 }
               />
               <TextField
-                className={styles.registrationForm__input}
                 error={
                   props.touched.confirmPassword && props.errors.confirmPassword
                 }
@@ -185,8 +165,8 @@ const Registration = (props) => {
               />
               <button
                 type="submit"
-                disabled={props.isSubmitting}
-                className={styles.registrationForm__button}
+                disabled={isAuthenticating}
+                className={classNames('l-auth-reg__button', styles.button)}
               >
                 ЗАРЕГИСТРИРОВАТЬСЯ
               </button>
@@ -194,17 +174,8 @@ const Registration = (props) => {
           )}
         </Formik>
         <div className="l-auth-reg__redirect">
-          <span className={styles.registrationForm__redirect}>
-            УЖЕ ЗАРЕГИСТРИРОВАНЫ?&nbsp;
-          </span>
-          <NavLink
-            onClick={() => {
-              clearErrors();
-              clearInputs();
-            }}
-            className={styles.registrationForm__link}
-            to={'/'}
-          >
+          <span className="l-auth-reg__text">УЖЕ ЗАРЕГИСТРИРОВАНЫ?&nbsp;</span>
+          <NavLink onClick={clearErrors} className="l-auth-reg__link" to={'/'}>
             ВОЙТИ
           </NavLink>
         </div>

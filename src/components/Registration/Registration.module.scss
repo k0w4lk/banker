@@ -1,44 +1,11 @@
-.registration {
-  &__wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: url('./../../assets/images/background.jpg') no-repeat;
-    background-size: cover;
-  }
-  &Form {
-    &__heading {
-      margin-top: 30px;
-      font-size: 28px;
-      line-height: 34px;
-      font-weight: 400;
-    }
-    &__input {
-      margin-top: 5px;
-    }
-    &__form {
-      display: grid;
-      grid-template: max-content / repeat(2, 300px);
-      grid-gap: 20px;
-      grid-auto-rows: max-content;
-    }
-    &__button {
-      background-color: #44d9e6;
-      border: none;
-      grid-column-start: 1;
-      grid-column-end: 3;
-      width: max-content;
-      margin: 0 auto;
-      color: #fff;
-      border-radius: 4px;
-      font-weight: bold;
-      font-size: 22px;
-      padding: 10px;
-      cursor: pointer;
-      &:hover {
-        background-color: #50bbc5;
-      }
-    }
-  }
+.form {
+  display: grid;
+  grid-template: max-content / repeat(2, 300px);
+  grid-auto-rows: max-content;
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+.button {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }

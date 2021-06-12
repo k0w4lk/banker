@@ -1,4 +1,12 @@
 .l-auth-reg {
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: url('./../../images/background.jpg') no-repeat;
+    background-size: cover;
+  }
   &__form {
     box-sizing: border-box;
     display: flex;
@@ -15,35 +23,34 @@
     height: 50px;
     margin: 0 auto;
   }
-
-  &__input {
-    height: 36px;
-    width: 340px;
-    padding: 0 10px;
+  &__heading {
+    margin-top: 30px;
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 400;
+  }
+  &__button {
+    background-color: #44d9e6;
     border: none;
-    border-bottom: 1px solid #000;
-    font-size: 18px;
-    line-height: 36px;
-    &::placeholder {
-      font-size: 18px;
-      line-height: 36px;
+    margin: 20px auto 0;
+    color: #fff;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 22px;
+    width: max-content;
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: #50bbc5;
     }
-    &:focus {
-      border-bottom-width: 2px;
-      outline: none;
+    &:disabled {
+      background-color: #adeff5;
+      cursor: default;
     }
   }
-
-  &__error-text {
-    font-size: 12px;
-    width: 340px;
-    text-align: justify;
-    color: rgb(187, 36, 36);
-  }
-
   &__redirect {
-    margin-top: 12px;
-    font-size: 13px;
+    margin-top: 20px;
+    font-size: 12px;
     text-align: center;
     &-text {
       color: #ccc;

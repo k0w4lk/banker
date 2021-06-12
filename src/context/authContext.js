@@ -16,45 +16,31 @@ export const WRONG_PASSWORD_ERROR =
 export const SOME_ERROR = 'Произошла ошибка';
 export const REQUIRED_ERROR = 'Обязательное поле';
 export const PASSWORD_MISMATCH_ERROR = 'Пароли должны совпадать';
+export const TOO_MANY_REQUESTS_ERROR =
+  'Учетная запись временно заблокирована. Попробуйте авторизоваться позже';
 export const MAX_NAME_LENGTH = 20;
 export const MAX_SURNAME_LENGTH = 25;
 
 const Auth = (props) => {
   const [user, setUser] = useState('');
-  const [loginEmail, setLoginEmail] = useState('');
-  const [registrationEmail, setRegistrationEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [registrationPassword, setRegistrationPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
-  const clearInputs = () => {
-    setLoginEmail('');
-    setRegistrationEmail('');
-    setLoginPassword('');
-    setRegistrationPassword('');
-  };
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const clearErrors = () => {
     setEmailError('');
     setPasswordError('');
   };
 
-  const onLoginEmailInputHandler = (e) => setLoginEmail(e.target.value);
-  const onRegistrationEmailInputHandler = (e) =>
-    setRegistrationEmail(e.target.value);
-
-  const onLoginPaswordInputHandler = (e) =>
-    setLoginPassword(e.currentTarget.value);
-  const onRegistrationPaswordInputHandler = (e) =>
-    setRegistrationPassword(e.currentTarget.value);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = (email, password) => {
     clearErrors();
+    setIsAuthenticating(true);
     firebase
       .auth()
-      .signInWithEmailAndPassword(loginEmail, loginPassword)
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        if (user) props.history.push('/main');
+      })
       .catch((err) => {
         switch (err.code) {
           case 'auth/invalid-email':
@@ -69,16 +55,23 @@ const Auth = (props) => {
           case 'auth/wrong-password':
             setPasswordError(WRONG_PASSWORD_ERROR);
             break;
+          case 'auth/too-many-requests':
+            setPasswordError(TOO_MANY_REQUESTS_ERROR);
+            break;
           default:
             setEmailError(SOME_ERROR);
             setPasswordError(SOME_ERROR);
             break;
         }
+      })
+      .finally(() => {
+        setIsAuthenticating(false);
       });
   };
 
   const handleRegistration = (email, password) => {
     clearErrors();
+    setIsAuthenticating(true);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -101,6 +94,9 @@ const Auth = (props) => {
             setPasswordError(SOME_ERROR);
             break;
         }
+      })
+      .finally(() => {
+        setIsAuthenticating(false);
       });
   };
 
@@ -108,10 +104,9 @@ const Auth = (props) => {
     firebase.auth().signOut();
   };
 
-  const authListener = () => {
+  useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        clearInputs();
         setUser(user);
         props.history.push('/main');
       } else {
@@ -119,31 +114,19 @@ const Auth = (props) => {
         props.history.push('/');
       }
     });
-  };
-
-  useEffect(() => {
-    authListener();
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        loginEmail,
-        registrationEmail,
-        loginPassword,
-        registrationPassword,
         emailError,
         passwordError,
-        onLoginEmailInputHandler,
-        onRegistrationEmailInputHandler,
-        onLoginPaswordInputHandler,
-        onRegistrationPaswordInputHandler,
         handleLogin,
         handleRegistration,
         handleLogout,
         clearErrors,
-        clearInputs,
+        isAuthenticating,
       }}
     >
       {props.children}
