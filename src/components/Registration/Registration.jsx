@@ -66,7 +66,13 @@ const Registration = (props) => {
             role: Yup.string().required(REQUIRED_ERROR),
           })}
           onSubmit={(values) => {
-            handleRegistration(values.email, values.password);
+            handleRegistration(
+              values.email,
+              values.password,
+              values.name,
+              values.surname,
+              values.role
+            );
           }}
         >
           {(props) => (

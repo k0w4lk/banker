@@ -1,6 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import firebase from 'firebase';
+import { addUser } from '../store/reducers/registrationReducer';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 export const AuthContext = createContext();
 
@@ -69,13 +72,15 @@ const Auth = (props) => {
       });
   };
 
-  const handleRegistration = (email, password) => {
+  const handleRegistration = (email, password, name, surname, role) => {
     clearErrors();
     setIsAuthenticating(true);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
+        props.addUser(name, surname, role, email);
+        console.log(name, surname, role, email);
         if (user) props.history.push('/main');
       })
       .catch((err) => {
@@ -134,4 +139,4 @@ const Auth = (props) => {
   );
 };
 
-export default withRouter(Auth);
+export default compose(withRouter, connect(null, { addUser }))(Auth);
