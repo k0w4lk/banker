@@ -51,6 +51,7 @@ const Authorization = (props) => {
                   emailError ||
                   (props.touched.email && props.errors.email)
                 }
+                autoFocus={true}
                 onChange={props.handleChange}
                 value={props.values.email}
                 onFocus={clearErrors}

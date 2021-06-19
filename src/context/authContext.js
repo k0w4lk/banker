@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import firebase from 'firebase';
-import { addUser } from '../store/reducers/registrationReducer';
+import { firebase } from './../firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { setUserId } from '../store/reducers/profileReducer';
 
 export const AuthContext = createContext();
 
@@ -23,6 +23,8 @@ export const TOO_MANY_REQUESTS_ERROR =
   'Учетная запись временно заблокирована. Попробуйте авторизоваться позже';
 export const MAX_NAME_LENGTH = 20;
 export const MAX_SURNAME_LENGTH = 25;
+
+const db = firebase.database();
 
 const Auth = (props) => {
   const [user, setUser] = useState('');
@@ -78,11 +80,6 @@ const Auth = (props) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        props.addUser(name, surname, role, email);
-        console.log(name, surname, role, email);
-        if (user) props.history.push('/main');
-      })
       .catch((err) => {
         switch (err.code) {
           case 'auth/email-already-in-use':
@@ -103,6 +100,11 @@ const Auth = (props) => {
       .finally(() => {
         setIsAuthenticating(false);
       });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.ref(`/users/${user.uid}`).set({ name, surname, role, email });
+      }
+    });
   };
 
   const handleLogout = () => {
@@ -113,6 +115,7 @@ const Auth = (props) => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        props.setUserId(user.uid);
         props.history.push('/main');
       } else {
         setUser('');
@@ -127,11 +130,11 @@ const Auth = (props) => {
         user,
         emailError,
         passwordError,
+        isAuthenticating,
         handleLogin,
         handleRegistration,
         handleLogout,
         clearErrors,
-        isAuthenticating,
       }}
     >
       {props.children}
@@ -139,4 +142,4 @@ const Auth = (props) => {
   );
 };
 
-export default compose(withRouter, connect(null, { addUser }))(Auth);
+export default compose(withRouter, connect(null, { setUserId }))(Auth);

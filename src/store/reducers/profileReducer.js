@@ -1,14 +1,14 @@
-import firebase from 'firebase';
+import { firebase } from './../../firebase';
 
 const SET_USER_DATA = 'SET_USER_DATA';
+const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 
 const initialState = {
-  user: {
-    name: null,
-    surname: null,
-    role: null,
-    email: null,
-  },
+  name: null,
+  surname: null,
+  role: null,
+  email: null,
+  id: null,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -16,12 +16,11 @@ const profileReducer = (state = initialState, action) => {
     case SET_USER_DATA:
       return {
         ...state,
-        user: {
-          name: action.payload.name,
-          surname: action.payload.surname,
-          role: action.payload.role,
-          email: action.payload.email,
-        },
+        name: action.payload.name,
+        surname: action.payload.surname,
+        role: action.payload.role,
+        email: action.payload.email,
+        id: action.payload.id,
       };
 
     default:
@@ -29,23 +28,37 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-const setUserData = (name, surname, role, email) => ({
+const setUserData = (data) => ({
   type: SET_USER_DATA,
   payload: {
-    name,
-    surname,
-    role,
-    email,
+    name: data.name,
+    surname: data.surname,
+    role: data.role,
+    email: data.email,
+    id: data.id,
   },
 });
 
-export const setUser = (name, surname, role, email) => (dispatch) => {
+const updateUserData = (data) => ({
+  type: UPDATE_USER_DATA,
+  payload: {
+    name: data.name,
+    surname: data.surname,
+  },
+});
+
+export const setUpdatedUserData = (data) => (dispatch) => {
+  firebase.database().ref(`/users/${data.id}/name`).set(data.name);
+  firebase.database().ref(`/users/${data.id}/surname`).set(data.surname);
+  dispatch(updateUserData(data));
+};
+
+export const setUserId = (id) => (dispatch) => {
   firebase
     .database()
-    .ref(`/users/${email}`)
+    .ref(`/users/${id}`)
     .once('value', (val) => {
-      console.log({ ...val.val() });
-      dispatch(setUserData({ ...val.val() }));
+      dispatch(setUserData({ ...val.val(), id }));
     });
 };
 
