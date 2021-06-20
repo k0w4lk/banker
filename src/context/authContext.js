@@ -71,7 +71,6 @@ const Auth = (props) => {
       })
       .finally(() => {
         setIsAuthenticating(false);
-        props.history.push('/main');
       });
   };
 
