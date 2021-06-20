@@ -21,7 +21,7 @@ export const REQUIRED_ERROR = 'Обязательное поле';
 export const PASSWORD_MISMATCH_ERROR = 'Пароли должны совпадать';
 export const TOO_MANY_REQUESTS_ERROR =
   'Учетная запись временно заблокирована. Попробуйте авторизоваться позже';
-export const MAX_NAME_LENGTH = 20;
+export const MAX_NAME_LENGTH = 25;
 export const MAX_SURNAME_LENGTH = 25;
 
 const db = firebase.database();
