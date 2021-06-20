@@ -1,28 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import store from './store/store';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import firebase from 'firebase';
 import Auth from './context/authContext';
-
-firebase.initializeApp({
-  apiKey: 'AIzaSyDXABBa26lbVbv3cmr44BoMNxRXMeSaPhg',
-  authDomain: 'banker-f9fc3.firebaseapp.com',
-  projectId: 'banker-f9fc3',
-  storageBucket: 'banker-f9fc3.appspot.com',
-  messagingSenderId: '647493756567',
-  appId: '1:647493756567:web:d08c88243400bc333b6bd2',
-});
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Auth>
-        <App />
-      </Auth>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Auth>
+          <App />
+        </Auth>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
