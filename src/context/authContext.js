@@ -71,6 +71,7 @@ const Auth = (props) => {
       })
       .finally(() => {
         setIsAuthenticating(false);
+        props.history.push('/main');
       });
   };
 
@@ -109,6 +110,7 @@ const Auth = (props) => {
 
   const handleLogout = () => {
     firebase.auth().signOut();
+    props.history.push('/');
   };
 
   useEffect(() => {
@@ -116,10 +118,8 @@ const Auth = (props) => {
       if (user) {
         setUser(user);
         props.setUserId(user.uid);
-        props.history.push('/main');
       } else {
         setUser('');
-        props.history.push('/');
       }
     });
   }, []);
