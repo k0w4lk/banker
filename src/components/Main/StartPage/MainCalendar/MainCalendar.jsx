@@ -1,29 +1,27 @@
-import { useState } from 'react';
+import { setPickedDate } from './../../../../store/reducers/calendarReminderReducer';
 import Calendar from 'react-calendar';
-import { TextField } from '@material-ui/core';
-import styles from './MainCalendar.module.scss';
+// import styles from './MainCalendar.module.scss';
+import { connect } from 'react-redux';
 
-const MainCalendar = () => {
-  const [date, setDate] = useState(new Date());
-
+const MainCalendar = (props) => {
   const onDateChangeHandler = (date) => {
-    setDate(date);
-    console.log(date);
+    props.setPickedDate(date);
+
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
     if (date.getTime() >= currentDate.getTime()) {
-      console.log('opppa');
+      console.log('You can set a reminder');
     }
   };
   return (
     <div>
-      <Calendar value={date} onClickDay={onDateChangeHandler} />
-      <TextField
-        className={styles.input}
-        label={`Введите задачу на ${date.toLocaleDateString()}`}
-      />
+      <Calendar value={props.date} onClickDay={onDateChangeHandler} />
     </div>
   );
 };
 
-export default MainCalendar;
+const mapStateToProps = (state) => ({
+  date: state.calendar.date,
+});
+
+export default connect(mapStateToProps, { setPickedDate })(MainCalendar);

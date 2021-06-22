@@ -102,7 +102,12 @@ const Auth = (props) => {
       });
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        db.ref(`/users/${user.uid}`).set({ name, surname, role, email });
+        db.ref(`/users/${user.uid}`).set({
+          name,
+          surname,
+          role,
+          email,
+        });
       }
     });
   };

@@ -1,0 +1,8 @@
+.historyWrapper {
+  display: flex;
+  width: 500px;
+  height: 100%;
+  border: 1px solid red;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
