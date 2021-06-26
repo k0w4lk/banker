@@ -1,6 +1,7 @@
 .wrapper {
   display: grid;
-  grid-template: max-content / 1fr 400px;
+  grid-template: max-content / 4fr 3fr;
   grid-auto-rows: 1fr;
+  grid-column-gap: 10px;
   padding: 6px;
 }

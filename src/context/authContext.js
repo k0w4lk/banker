@@ -74,7 +74,7 @@ const Auth = (props) => {
       });
   };
 
-  const handleRegistration = (email, password, name, surname, role) => {
+  const handleRegistration = (email, password, name, surname) => {
     clearErrors();
     setIsAuthenticating(true);
     firebase
@@ -105,7 +105,6 @@ const Auth = (props) => {
         db.ref(`/users/${user.uid}`).set({
           name,
           surname,
-          role,
           email,
         });
       }

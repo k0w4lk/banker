@@ -6,7 +6,6 @@ const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 const initialState = {
   name: null,
   surname: null,
-  role: null,
   email: null,
   id: null,
 };
@@ -18,7 +17,6 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         name: action.payload.name,
         surname: action.payload.surname,
-        role: action.payload.role,
         email: action.payload.email,
         id: action.payload.id,
       };
@@ -33,7 +31,6 @@ const setUserData = (data) => ({
   payload: {
     name: data.name,
     surname: data.surname,
-    role: data.role,
     email: data.email,
     id: data.id,
   },
