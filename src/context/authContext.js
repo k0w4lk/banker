@@ -71,11 +71,10 @@ const Auth = (props) => {
       })
       .finally(() => {
         setIsAuthenticating(false);
-        props.history.push('/main');
       });
   };
 
-  const handleRegistration = (email, password, name, surname, role) => {
+  const handleRegistration = (email, password, name, surname) => {
     clearErrors();
     setIsAuthenticating(true);
     firebase
@@ -103,7 +102,11 @@ const Auth = (props) => {
       });
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        db.ref(`/users/${user.uid}`).set({ name, surname, role, email });
+        db.ref(`/users/${user.uid}`).set({
+          name,
+          surname,
+          email,
+        });
       }
     });
   };

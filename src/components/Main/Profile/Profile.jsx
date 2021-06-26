@@ -47,7 +47,6 @@ const Profile = (props) => {
           email: props.profile.email,
         }}
         onSubmit={(values) => {
-          console.log(values, user.uid);
           props.setUpdatedUserData({
             name: values.name,
             surname: values.surname,
