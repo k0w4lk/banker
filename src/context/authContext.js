@@ -28,10 +28,10 @@ const db = firebase.database();
 
 const Auth = (props) => {
   const [user, setUser] = useState('');
+  const [isCheckingForUser, setIsCheckingForUser] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
   const clearErrors = () => {
     setEmailError('');
     setPasswordError('');
@@ -117,6 +117,7 @@ const Auth = (props) => {
   };
 
   useEffect(() => {
+    setIsCheckingForUser(true);
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
@@ -124,6 +125,7 @@ const Auth = (props) => {
       } else {
         setUser('');
       }
+      setIsCheckingForUser(false);
     });
   }, []);
 
@@ -134,6 +136,7 @@ const Auth = (props) => {
         emailError,
         passwordError,
         isAuthenticating,
+        isCheckingForUser,
         handleLogin,
         handleRegistration,
         handleLogout,

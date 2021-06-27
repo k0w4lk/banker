@@ -20,13 +20,6 @@ const Navigation = (props) => {
         >
           Клиенты
         </NavLink>
-        <NavLink
-          to="/main/products"
-          className={styles.navigation__item}
-          activeClassName={styles.active}
-        >
-          Продукты
-        </NavLink>
       </div>
       <div className={styles.profileBlock}>
         <NavLink
