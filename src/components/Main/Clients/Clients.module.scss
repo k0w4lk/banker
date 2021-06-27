@@ -18,15 +18,8 @@
     margin-left: 12px;
   }
 }
-.addClient {
-  &Button {
-    background-image: url('./../../../assets/images/plus-light.svg');
-  }
-  &Form {
-    display: flex;
-    flex-direction: column;
-    padding: 4px 8px;
-  }
+.addClientButton {
+  background-image: url('./../../../assets/images/plus-light.svg');
 }
 .searchClientButton {
   background-image: url('./../../../assets/images/search.svg');
