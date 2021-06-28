@@ -30,7 +30,10 @@ const Clients = (props) => {
       </AddNavPanel>
       <ClientsList />
       <Dialog open={openAddClient}>
-        <AddClient handleCloseAddClient={handleCloseAddClient} />
+        <AddClient
+          handleCloseAddClient={handleCloseAddClient}
+          handleClickOpenAddClient={handleClickOpenAddClient}
+        />
       </Dialog>
     </div>
   );

@@ -33,6 +33,7 @@ const AddClient = (props) => {
             email: values.email,
             address: values.address,
           });
+          props.handleCloseAddClient();
         }}
       >
         {(props) => (
