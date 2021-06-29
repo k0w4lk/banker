@@ -3,7 +3,7 @@ import './../../../../assets/styles/main.scss';
 import { Formik } from 'formik';
 import classNames from 'classnames';
 import { addClient } from './../../../../store/reducers/clientsReducer.js';
-import { connect } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 import {
   TextField,
   Select,
@@ -15,11 +15,18 @@ import {
 import { addClientInitialValues, addClientValidation } from './formProps';
 
 const AddClient = (props) => {
+  const store = useStore();
+  const clientsData = store.getState().clients.clients;
+  const ids = [];
+  for (let client in clientsData) {
+    ids.push(clientsData[client].id);
+  }
+  console.log(ids);
   return (
     <div>
       <Formik
         initialValues={addClientInitialValues}
-        validationSchema={addClientValidation}
+        validationSchema={addClientValidation(ids)}
         onSubmit={(values) => {
           props.addClient({
             name: values.name,
@@ -104,8 +111,8 @@ const AddClient = (props) => {
                 value={props.values.sex}
                 onChange={props.handleChange}
               >
-                <MenuItem value="male">Мужчина</MenuItem>
-                <MenuItem value="female">Женщина</MenuItem>
+                <MenuItem value="Мужчина">Мужчина</MenuItem>
+                <MenuItem value="Женщина">Женщина</MenuItem>
               </Select>
               <FormHelperText>
                 {props.touched.sex && props.errors.sex

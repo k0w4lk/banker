@@ -30,9 +30,6 @@ const useStyles = makeStyles({
     },
   },
   tableCell: {
-    minWidth: '150px',
-    // width: '100%',
-    // maxWidth: '300px',
     whiteSpace: 'normal',
     wordBreak: 'break-all',
   },
@@ -59,21 +56,70 @@ const ClientsList = (props) => {
         <Table size="small" stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.tableCell}></TableCell>
-              <TableCell className={classes.tableCell}>Фамилия</TableCell>
-              <TableCell className={classes.tableCell}>Имя</TableCell>
-              <TableCell className={classes.tableCell}>Отчество</TableCell>
-              <TableCell className={classes.tableCell}>Дата рождения</TableCell>
-              <TableCell className={classes.tableCell}>Пол</TableCell>
-              <TableCell className={classes.tableCell}>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              ></TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
+                Фамилия
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
+                Имя
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
+                Отчество
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: '150px' }}
+              >
+                Дата рождения
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: '80px' }}
+              >
+                Пол
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: '190px' }}
+              >
                 Идентификационный номер
               </TableCell>
-              <TableCell className={classes.tableCell}>Место работы</TableCell>
-              <TableCell className={classes.tableCell}>Телефон</TableCell>
-              <TableCell className={classes.tableCell}>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
+                Место работы
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
+                Телефон
+              </TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
                 Электронная почта
               </TableCell>
-              <TableCell className={classes.tableCell}>Адрес</TableCell>
+              <TableCell
+                className={classes.tableCell}
+                style={{ minWidth: 'max-content' }}
+              >
+                Адрес
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -86,37 +132,17 @@ const ClientsList = (props) => {
             ) : (
               clients.map((client) => (
                 <TableRow key={client.id}>
-                  <TableCell className={classes.tableCell}>*</TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.surname}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.name}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.patronymic}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.birthdate}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.sex}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.id}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.work}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.phone}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.email}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {client.client.address}
-                  </TableCell>
+                  <TableCell>*</TableCell>
+                  <TableCell>{client.client.surname}</TableCell>
+                  <TableCell>{client.client.name}</TableCell>
+                  <TableCell>{client.client.patronymic}</TableCell>
+                  <TableCell>{client.client.birthdate}</TableCell>
+                  <TableCell>{client.client.sex}</TableCell>
+                  <TableCell>{client.client.id}</TableCell>
+                  <TableCell>{client.client.work}</TableCell>
+                  <TableCell>{client.client.phone}</TableCell>
+                  <TableCell>{client.client.email}</TableCell>
+                  <TableCell>{client.client.address}</TableCell>
                 </TableRow>
               ))
             )}
