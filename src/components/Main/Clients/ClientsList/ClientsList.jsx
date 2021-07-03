@@ -136,7 +136,7 @@ const ClientsList = (props) => {
                 clients.map((client) => (
                   <TableRow key={client.id}>
                     <TableCell>
-                      <img src={toClientPage} />
+                      <img src={toClientPage} alt="user icon" />
                     </TableCell>
                     <TableCell>{client.client.surname}</TableCell>
                     <TableCell>{client.client.name}</TableCell>

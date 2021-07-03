@@ -124,7 +124,7 @@ const Reminder = (props) => {
         </TableContainer>
       ) : (
         <div className={styles.noTasksWrapper}>
-          <img src={emptyBox} className={styles.noTasksImg} />
+          <img src={emptyBox} className={styles.noTasksImg} alt="empty icon" />
           <p className={styles.noTasksText}>Напоминаний нет</p>
         </div>
       )}

@@ -13,9 +13,13 @@ import {
   FormHelperText,
 } from '@material-ui/core';
 import { addClientInitialValues, addClientValidation } from './formProps';
+import { transferActionData } from '../../../../store/reducers/actionsReducer';
+import { useContext } from 'react';
+import { AuthContext } from './../../../../context/authContext';
 
 const AddClient = (props) => {
   const store = useStore();
+  const { user } = useContext(AuthContext);
   const clientsData = store.getState().clients.clients;
   const ids = [];
   for (let client in clientsData) {
@@ -38,6 +42,12 @@ const AddClient = (props) => {
             phone: values.phone,
             email: values.email,
             address: values.address,
+          });
+          props.transferActionData({
+            id: user.uid,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            action: `Заведена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
           });
           props.handleCloseAddClient();
         }}
@@ -200,4 +210,4 @@ const AddClient = (props) => {
   );
 };
 
-export default connect(null, { addClient })(AddClient);
+export default connect(null, { addClient, transferActionData })(AddClient);

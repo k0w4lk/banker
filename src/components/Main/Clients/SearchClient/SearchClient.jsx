@@ -52,7 +52,11 @@ const SearchClient = (props) => {
                 formProps.setFieldValue('id', '');
               }}
             >
-              <img className={styles.resetButtonImg} src={reset} />
+              <img
+                className={styles.resetButtonImg}
+                src={reset}
+                alt="search icon"
+              />
             </button>
             <form
               className={styles.form}
