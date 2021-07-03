@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { showClients } from '../../../../store/reducers/clientsReducer';
 import Preloader from './../../common/Preloader';
 import toClientPage from './../../../../assets/images/to-client-page.svg';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -136,7 +137,9 @@ const ClientsList = (props) => {
                 clients.map((client) => (
                   <TableRow key={client.id}>
                     <TableCell>
-                      <img src={toClientPage} alt="user icon" />
+                      <NavLink to={`/main/clients/${client.id}/data`}>
+                        <img src={toClientPage} alt="user icon" />
+                      </NavLink>
                     </TableCell>
                     <TableCell>{client.client.surname}</TableCell>
                     <TableCell>{client.client.name}</TableCell>

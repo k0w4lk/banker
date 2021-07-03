@@ -26,7 +26,7 @@ export const addClientInitialValues = {
   address: '',
 };
 
-export const addClientValidation = (ids) =>
+export const addClientValidation = (ids = []) =>
   Yup.object().shape(
     {
       name: Yup.string()

@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import Preloader from './common/Preloader/Preloader';
 import Clients from './Clients';
 import StartPage from './StartPage';
+import ClientPage from './Clients/ClientPage';
 
 const Main = () => {
   const { user } = useContext(AuthContext);
@@ -16,6 +17,10 @@ const Main = () => {
       <Route exact path="/main" render={() => <StartPage />} />
       <Route exact path="/main/profile" render={() => <Profile />} />
       <Route exact path="/main/clients" render={() => <Clients />} />
+      <Route
+        path="/main/clients/:clientId/data"
+        render={() => <ClientPage />}
+      />
     </div>
   ) : (
     <Preloader />

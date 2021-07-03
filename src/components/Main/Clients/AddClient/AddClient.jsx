@@ -12,7 +12,10 @@ import {
   InputLabel,
   FormHelperText,
 } from '@material-ui/core';
-import { addClientInitialValues, addClientValidation } from './formProps';
+import {
+  addClientInitialValues,
+  addClientValidation,
+} from '../clientDataFormProps';
 import { transferActionData } from '../../../../store/reducers/actionsReducer';
 import { useContext } from 'react';
 import { AuthContext } from './../../../../context/authContext';
