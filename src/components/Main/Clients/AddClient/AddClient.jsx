@@ -21,7 +21,6 @@ const AddClient = (props) => {
   for (let client in clientsData) {
     ids.push(clientsData[client].id);
   }
-  console.log(ids);
   return (
     <div>
       <Formik
@@ -181,16 +180,16 @@ const AddClient = (props) => {
           </form>
         )}
       </Formik>
-      <div className={styles.buttonsWrapper}>
+      <div className={'c-form__buttons-wrapper'}>
         <button
-          className={classNames(styles.formButton, styles.formButtonApply)}
+          className={classNames('c-form__button', 'c-form__button_apply')}
           type="submit"
           form="add-client-form"
         >
           ДОБАВИТЬ
         </button>
         <button
-          className={classNames(styles.formButton, styles.formButtonCancel)}
+          className={classNames('c-form__button', 'c-form__button_cancel')}
           type="button"
           onClick={props.handleCloseAddClient}
         >

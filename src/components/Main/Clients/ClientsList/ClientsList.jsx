@@ -11,6 +11,8 @@ import styles from './ClientsList.module.scss';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { showClients } from '../../../../store/reducers/clientsReducer';
+import Preloader from './../../common/Preloader';
+import toClientPage from './../../../../assets/images/to-client-page.svg';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -42,119 +44,124 @@ const useStyles = makeStyles({
 const ClientsList = (props) => {
   const classes = useStyles();
   useEffect(() => {
-    console.log(1);
     props.showClients();
   }, []);
   const clients = [];
   for (let client in props.clients) {
     clients.push({ client: props.clients[client], id: client });
   }
-  console.log(clients);
-  return (
-    <div className={styles.clientsTableWrapper}>
-      <TableContainer className={classes.tableContainer}>
-        <Table size="small" stickyHeader className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              ></TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Фамилия
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Имя
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Отчество
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: '150px' }}
-              >
-                Дата рождения
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: '80px' }}
-              >
-                Пол
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: '190px' }}
-              >
-                Идентификационный номер
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Место работы
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Телефон
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Электронная почта
-              </TableCell>
-              <TableCell
-                className={classes.tableCell}
-                style={{ minWidth: 'max-content' }}
-              >
-                Адрес
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!clients.length ? (
+  if (props.isClientsLoading) {
+    return <Preloader />;
+  } else {
+    return (
+      <div className={styles.clientsTableWrapper}>
+        <TableContainer className={classes.tableContainer}>
+          <Table size="small" stickyHeader className={classes.table}>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={11} align="center">
-                  ПУСТО
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: 'max-content' }}
+                ></TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: 'max-content' }}
+                >
+                  Фамилия
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: 'max-content' }}
+                >
+                  Имя
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: 'max-content' }}
+                >
+                  Отчество
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: '150px' }}
+                >
+                  Дата рождения
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: '80px' }}
+                >
+                  Пол
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: '190px' }}
+                >
+                  Идентификационный номер
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: '150px' }}
+                >
+                  Место работы
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: 'max-content' }}
+                >
+                  Телефон
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: '200px' }}
+                >
+                  Электронная почта
+                </TableCell>
+                <TableCell
+                  className={classes.tableCell}
+                  style={{ minWidth: 'max-content' }}
+                >
+                  Адрес
                 </TableCell>
               </TableRow>
-            ) : (
-              clients.map((client) => (
-                <TableRow key={client.id}>
-                  <TableCell>*</TableCell>
-                  <TableCell>{client.client.surname}</TableCell>
-                  <TableCell>{client.client.name}</TableCell>
-                  <TableCell>{client.client.patronymic}</TableCell>
-                  <TableCell>{client.client.birthdate}</TableCell>
-                  <TableCell>{client.client.sex}</TableCell>
-                  <TableCell>{client.client.id}</TableCell>
-                  <TableCell>{client.client.work}</TableCell>
-                  <TableCell>{client.client.phone}</TableCell>
-                  <TableCell>{client.client.email}</TableCell>
-                  <TableCell>{client.client.address}</TableCell>
+            </TableHead>
+            <TableBody>
+              {!clients.length ? (
+                <TableRow>
+                  <TableCell colSpan={11} align="center">
+                    ПУСТО
+                  </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
+              ) : (
+                clients.map((client) => (
+                  <TableRow key={client.id}>
+                    <TableCell>
+                      <img src={toClientPage} />
+                    </TableCell>
+                    <TableCell>{client.client.surname}</TableCell>
+                    <TableCell>{client.client.name}</TableCell>
+                    <TableCell>{client.client.patronymic}</TableCell>
+                    <TableCell>{client.client.birthdate}</TableCell>
+                    <TableCell>{client.client.sex}</TableCell>
+                    <TableCell>{client.client.id}</TableCell>
+                    <TableCell>{client.client.work}</TableCell>
+                    <TableCell>{client.client.phone}</TableCell>
+                    <TableCell>{client.client.email}</TableCell>
+                    <TableCell>{client.client.address}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    );
+  }
 };
 
 const mapStateToProps = (state) => ({
   clients: state.clients.clients,
+  isClientsLoading: state.clients.isClientsLoading,
 });
 
 export default connect(mapStateToProps, { showClients })(ClientsList);

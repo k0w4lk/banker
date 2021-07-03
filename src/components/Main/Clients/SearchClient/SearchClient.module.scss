@@ -1,0 +1,34 @@
+.searchFormWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 10px 0;
+}
+
+.resetButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
+  &:active {
+    background-color: #ddd;
+  }
+  &Img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-bottom: 10px;
+  &Input {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}
