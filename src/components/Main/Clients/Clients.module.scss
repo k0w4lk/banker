@@ -1,26 +1,27 @@
-.profile {
-  &__wrapper {
-    width: 100%;
+.wrapper {
+  width: 100%;
+  height: calc(100% - 75px);
+}
+.panelButton {
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: transparent;
+  &:hover {
+    background-color: rgba($color: #fff, $alpha: 0.25);
   }
-  &__exitButton {
-    margin-left: auto;
+  &:not(:first-child) {
+    margin-left: 12px;
   }
-  &__data {
-    &Wrapper {
-      display: grid;
-      grid-template: 30px / 240px 300px;
-      grid-auto-rows: 30px;
-      grid-row-gap: 16px;
-      margin: 20px 0 0 10px;
-    }
-    &Heading {
-      line-height: 30px;
-    }
-    &Value {
-      background-color: #91bde5;
-      border-radius: 5px;
-      border: 1px solid #729496;
-      outline: none;
-    }
-  }
+}
+.addClientButton {
+  background-image: url('./../../../assets/images/plus-light.svg');
+}
+.searchClientButton {
+  background-image: url('./../../../assets/images/search.svg');
 }

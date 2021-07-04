@@ -8,9 +8,9 @@ import './../../../assets/styles/main.scss';
 
 const StartPage = () => {
   return (
-    <div>
+    <div className={styles.pageWrapper}>
       <AddNavPanel className={styles.nav} />
-      <div className={styles.wrapper}>
+      <div className={styles.contentWrapper}>
         <ActionsHistory />
         <MainCalendar />
         <Reminder />

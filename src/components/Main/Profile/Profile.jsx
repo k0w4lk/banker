@@ -69,13 +69,6 @@ const Profile = (props) => {
               type="email"
               value={props.values.email}
             />
-            <span className={styles.profile__dataHeading}>ПАРОЛЬ</span>
-            <input
-              disabled
-              value=""
-              className={styles.profile__dataValue}
-              type="password"
-            />
             <span className={styles.profile__dataHeading}>ИМЯ</span>
             <input
               disabled={!isEditMode}
@@ -93,13 +86,6 @@ const Profile = (props) => {
               onChange={props.handleChange}
               name="surname"
               value={props.values.surname}
-            />
-            <span className={styles.profile__dataHeading}>ФОТО ПРОФИЛЯ</span>
-            <input
-              disabled={!isEditMode}
-              className={styles.profile__dataValue}
-              type="file"
-              value=""
             />
           </form>
         )}

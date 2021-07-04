@@ -1,0 +1,7 @@
+.addClientForm {
+  display: grid;
+  grid-template: max-content / repeat(2, 280px);
+  grid-auto-rows: max-content;
+  grid-gap: 10px;
+  padding: 16px 10px;
+}
