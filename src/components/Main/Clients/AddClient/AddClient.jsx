@@ -48,8 +48,8 @@ const AddClient = (props) => {
           });
           props.transferActionData({
             id: user.uid,
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(),
+            date: new Date().toLocaleDateString('ru'),
+            time: new Date().toLocaleTimeString('ru'),
             action: `Заведена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
           });
           props.handleCloseAddClient();

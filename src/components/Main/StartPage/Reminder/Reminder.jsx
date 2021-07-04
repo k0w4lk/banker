@@ -59,7 +59,7 @@ const Reminder = (props) => {
   useEffect(() => {
     props.getTasksForCurrentDate({
       id: user.uid,
-      date: props.date.toLocaleDateString().replaceAll('.', '-'),
+      date: props.date.toLocaleDateString('ru').replaceAll('.', '-'),
     });
   }, []);
 
@@ -68,7 +68,7 @@ const Reminder = (props) => {
     props.setTaskForCurrentDate({
       id: user.uid,
       task: task,
-      date: props.date.toLocaleDateString().replaceAll('.', '-'),
+      date: props.date.toLocaleDateString('ru').replaceAll('.', '-'),
     });
     setTask('');
   };
@@ -78,7 +78,7 @@ const Reminder = (props) => {
       <div className={styles.tableHeadingWrapper}>
         <div className={styles.tableHeading}>
           <h2 className={styles.heading}>Напоминания</h2>
-          <p className={styles.date}>{props.date.toLocaleDateString()}</p>
+          <p className={styles.date}>{props.date.toLocaleDateString('ru')}</p>
         </div>
         {props.addTaskMode ? (
           <div className={styles.addTaskWrapper}>

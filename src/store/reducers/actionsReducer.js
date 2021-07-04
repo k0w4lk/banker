@@ -30,7 +30,6 @@ const setActionsLoadingStatus = (status) => ({
 });
 
 export const getActionsData = (data) => (dispatch) => {
-  dispatch(setActionsLoadingStatus(true));
   firebase
     .database()
     .ref(`/users/${data.id}/actions`)
