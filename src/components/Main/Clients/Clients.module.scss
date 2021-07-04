@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  height: calc(100% - 75px);
+}
+.panelButton {
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: transparent;
+  &:hover {
+    background-color: rgba($color: #fff, $alpha: 0.25);
+  }
+  &:not(:first-child) {
+    margin-left: 12px;
+  }
+}
+.addClientButton {
+  background-image: url('./../../../assets/images/plus-light.svg');
+  margin-right: 12px;
+}
+.searchClientButton {
+  background-image: url('./../../../assets/images/search.svg');
+}

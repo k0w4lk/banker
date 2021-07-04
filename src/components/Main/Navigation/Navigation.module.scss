@@ -1,0 +1,31 @@
+.navigation {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 4px;
+  &__item {
+    background-color: #ceebfc;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    padding: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    &:visited {
+      color: #000;
+    }
+  }
+}
+
+.workBlocks {
+  display: grid;
+  grid-template: max-content / repeat(3, max-content);
+  grid-column-gap: 2px;
+}
+
+.profileBlock {
+  display: flex;
+}
+
+.active {
+  background-color: #9cd3fc;
+}

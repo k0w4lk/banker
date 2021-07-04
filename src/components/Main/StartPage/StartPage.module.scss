@@ -1,0 +1,11 @@
+.pageWrapper {
+  height: calc(100% - 35px);
+}
+.contentWrapper {
+  display: grid;
+  height: calc(100% - 40px);
+  grid-template: max-content / 4fr 3fr;
+  grid-auto-rows: 1fr;
+  grid-gap: 10px;
+  padding: 6px;
+}

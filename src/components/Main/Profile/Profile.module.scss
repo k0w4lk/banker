@@ -1,0 +1,21 @@
+.profile {
+  &__wrapper {
+    width: 100%;
+  }
+  &__exitButton {
+    margin-left: auto;
+  }
+  &__data {
+    &Wrapper {
+      display: grid;
+      grid-template: max-content / 240px 300px;
+      grid-auto-rows: max-content;
+      grid-row-gap: 16px;
+      align-items: center;
+      margin: 20px 0 0 10px;
+    }
+    &Heading {
+      line-height: 30px;
+    }
+  }
+}

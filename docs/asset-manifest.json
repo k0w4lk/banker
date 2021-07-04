@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fd848433.chunk.css",
+    "main.js": "/static/js/main.d165e723.chunk.js",
+    "main.js.map": "/static/js/main.d165e723.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.38d2a26c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.38d2a26c.js.map",
+    "static/css/2.835acb34.chunk.css": "/static/css/2.835acb34.chunk.css",
+    "static/js/2.0db28108.chunk.js": "/static/js/2.0db28108.chunk.js",
+    "static/js/2.0db28108.chunk.js.map": "/static/js/2.0db28108.chunk.js.map",
+    "static/js/3.43b17cae.chunk.js": "/static/js/3.43b17cae.chunk.js",
+    "static/js/3.43b17cae.chunk.js.map": "/static/js/3.43b17cae.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.835acb34.chunk.css.map": "/static/css/2.835acb34.chunk.css.map",
+    "static/css/main.fd848433.chunk.css.map": "/static/css/main.fd848433.chunk.css.map",
+    "static/js/2.0db28108.chunk.js.LICENSE.txt": "/static/js/2.0db28108.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/PTMono-Regular.dc3163f2.ttf",
+    "static/media/main.scss": "/static/media/background.41ea46de.jpg",
+    "static/media/empty-box.5ef6fb58.svg": "/static/media/empty-box.5ef6fb58.svg",
+    "static/media/logo.294a2208.svg": "/static/media/logo.294a2208.svg",
+    "static/media/Clients.module.scss": "/static/media/search.3b87573f.svg",
+    "static/media/Reminder.module.scss": "/static/media/plus.7b06ed60.svg",
+    "static/media/reset-clients-filter.7200115a.svg": "/static/media/reset-clients-filter.7200115a.svg",
+    "static/media/to-client-page.ac1ba8f2.svg": "/static/media/to-client-page.ac1ba8f2.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.38d2a26c.js",
+    "static/css/2.835acb34.chunk.css",
+    "static/js/2.0db28108.chunk.js",
+    "static/css/main.fd848433.chunk.css",
+    "static/js/main.d165e723.chunk.js"
+  ]
+}
