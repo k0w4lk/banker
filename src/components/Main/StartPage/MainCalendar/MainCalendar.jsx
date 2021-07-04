@@ -27,7 +27,11 @@ const MainCalendar = (props) => {
   };
   return (
     <div className={styles.calendarWrapper}>
-      <Calendar value={props.date} onClickDay={onDateChangeHandler} />
+      <Calendar
+        className={styles.calendar}
+        value={props.date}
+        onClickDay={onDateChangeHandler}
+      />
     </div>
   );
 };
