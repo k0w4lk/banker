@@ -29,5 +29,9 @@
         background-color: lighten($color: #ccc, $amount: 10%);
       }
     }
+    &:disabled {
+      background-color: #3daaf3;
+      cursor: default;
+    }
   }
 }

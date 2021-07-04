@@ -56,11 +56,10 @@ export const addClientValidation = (ids = []) =>
         .required(REQUIRED_ERROR),
       phone: Yup.string()
         .ensure()
+        .matches(/^[+]{1}[0-9]{12}$/, WRONG_PHONE_NUMBER_FORMAT)
         .when(['email', 'address'], {
           is: (email, address) => !email && !address,
-          then: Yup.string()
-            .matches(/^[+][0-9]{12}$/, WRONG_PHONE_NUMBER_FORMAT)
-            .required(REQUIRED_ERROR),
+          then: Yup.string().required(REQUIRED_ERROR),
         }),
       email: Yup.string()
         .ensure()

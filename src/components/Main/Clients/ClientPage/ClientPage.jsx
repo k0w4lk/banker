@@ -126,11 +126,11 @@ const ClientPage = (props) => {
                       name="surname"
                       onChange={formProps.handleChange}
                       error={Boolean(
-                        formProps.touched.name && formProps.errors.name
+                        formProps.touched.surname && formProps.errors.surname
                       )}
                       helperText={
-                        formProps.touched.name && formProps.errors.name
-                          ? formProps.errors.name
+                        formProps.touched.surname && formProps.errors.surname
+                          ? formProps.errors.surname
                           : null
                       }
                     />
@@ -144,6 +144,14 @@ const ClientPage = (props) => {
                       value={formProps.values.name}
                       name="name"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.name && formProps.errors.name
+                      )}
+                      helperText={
+                        formProps.touched.name && formProps.errors.name
+                          ? formProps.errors.name
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -155,6 +163,16 @@ const ClientPage = (props) => {
                       value={formProps.values.patronymic}
                       name="patronymic"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.patronymic &&
+                          formProps.errors.patronymic
+                      )}
+                      helperText={
+                        formProps.touched.patronymic &&
+                        formProps.errors.patronymic
+                          ? formProps.errors.patronymic
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -167,6 +185,16 @@ const ClientPage = (props) => {
                       name="birthdate"
                       type="date"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.birthdate &&
+                          formProps.errors.birthdate
+                      )}
+                      helperText={
+                        formProps.touched.birthdate &&
+                        formProps.errors.birthdate
+                          ? formProps.errors.birthdate
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -178,6 +206,14 @@ const ClientPage = (props) => {
                       value={formProps.values.sex}
                       name="sex"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.sex && formProps.errors.sex
+                      )}
+                      helperText={
+                        formProps.touched.sex && formProps.errors.sex
+                          ? formProps.errors.sex
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -191,6 +227,14 @@ const ClientPage = (props) => {
                       value={formProps.values.id}
                       name="id"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.id && formProps.errors.id
+                      )}
+                      helperText={
+                        formProps.touched.id && formProps.errors.id
+                          ? formProps.errors.id
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -202,6 +246,14 @@ const ClientPage = (props) => {
                       value={formProps.values.work}
                       name="work"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.work && formProps.errors.work
+                      )}
+                      helperText={
+                        formProps.touched.work && formProps.errors.work
+                          ? formProps.errors.work
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -213,6 +265,14 @@ const ClientPage = (props) => {
                       value={formProps.values.phone}
                       name="phone"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.phone && formProps.errors.phone
+                      )}
+                      helperText={
+                        formProps.touched.phone && formProps.errors.phone
+                          ? formProps.errors.phone
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -224,6 +284,14 @@ const ClientPage = (props) => {
                       value={formProps.values.email}
                       name="email"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.email && formProps.errors.email
+                      )}
+                      helperText={
+                        formProps.touched.email && formProps.errors.email
+                          ? formProps.errors.email
+                          : null
+                      }
                     />
                   </div>
                   <div className={styles.fieldWrapper}>
@@ -235,6 +303,14 @@ const ClientPage = (props) => {
                       value={formProps.values.address}
                       name="address"
                       onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.address && formProps.errors.address
+                      )}
+                      helperText={
+                        formProps.touched.address && formProps.errors.address
+                          ? formProps.errors.address
+                          : null
+                      }
                     />
                   </div>
                 </form>

@@ -13,9 +13,19 @@
       grid-row-gap: 16px;
       align-items: center;
       margin: 20px 0 0 10px;
+      @media screen and (max-width: 700px) {
+        grid-template-columns: 1fr;
+        margin: 0;
+        padding: 5px;
+        grid-row-gap: 6px;
+      }
     }
     &Heading {
       line-height: 30px;
     }
   }
+}
+
+.saveButton {
+  margin-left: 12px;
 }

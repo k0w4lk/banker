@@ -10,10 +10,7 @@ import { Formik } from 'formik';
 import { TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import {
-  INVALID_EMAIL_ERROR,
-  WEAK_PASSWORD_ERROR,
   REQUIRED_ERROR,
-  PASSWORD_MISMATCH_ERROR,
   MAX_NAME_LENGTH,
   MAX_SURNAME_LENGTH,
 } from './../../../context/authContext';
@@ -26,24 +23,26 @@ const Profile = (props) => {
   return (
     <div className={styles.profile__wrapper}>
       <AddNavPanel>
+        <button
+          className="c-add-nav-panel__text-button"
+          type="button"
+          disabled={isEditMode}
+          onClick={() => setIsEditMode(true)}
+        >
+          РЕДАКТИРОВАТЬ
+        </button>
         {isEditMode ? (
           <button
-            className="c-add-nav-panel__text-button"
-            onClick={() => setIsEditMode(!isEditMode)}
-            type="button"
-          >
-            СОХРАНИТЬ
-          </button>
-        ) : (
-          <button
-            className="c-add-nav-panel__text-button"
-            onClick={() => setIsEditMode(!isEditMode)}
+            className={classNames(
+              'c-add-nav-panel__text-button',
+              styles.saveButton
+            )}
             form="profile-data-form"
             type="submit"
           >
-            РЕДАКТИРОВАТЬ
+            СОХРАНИТЬ
           </button>
-        )}
+        ) : null}
         <button
           className={classNames(
             'c-add-nav-panel__text-button',
@@ -71,7 +70,7 @@ const Profile = (props) => {
             .required(REQUIRED_ERROR),
           surname: Yup.string()
             .max(
-              MAX_NAME_LENGTH,
+              MAX_SURNAME_LENGTH,
               `Фамилия должна иметь не более ${MAX_SURNAME_LENGTH} символов`
             )
             .matches(/^[А-Яа-я]+$/, ONLY_CYRILLIC_SYMBOLS)
@@ -83,33 +82,52 @@ const Profile = (props) => {
             surname: values.surname,
             id: user.uid,
           });
+          setIsEditMode(!isEditMode);
         }}
       >
-        {(props) => (
+        {(formProps) => (
           <form
             id="profile-data-form"
             className={styles.profile__dataWrapper}
-            onSubmit={props.handleSubmit}
+            onSubmit={formProps.handleSubmit}
           >
             <span className={styles.profile__dataHeading}>
               ЭЛЕКТРОННАЯ ПОЧТА
             </span>
-            <TextField variant="outlined" disabled value={props.values.email} />
+            <TextField
+              variant="outlined"
+              disabled
+              value={formProps.values.email}
+            />
             <span className={styles.profile__dataHeading}>ИМЯ</span>
             <TextField
               variant="outlined"
               disabled={!isEditMode}
-              onChange={props.handleChange}
+              onChange={formProps.handleChange}
               name="name"
-              value={props.values.name}
+              value={formProps.values.name}
+              error={Boolean(formProps.touched.name && formProps.errors.name)}
+              helperText={
+                formProps.touched.name && formProps.errors.name
+                  ? formProps.errors.name
+                  : null
+              }
             />
             <span className={styles.profile__dataHeading}>ФАМИЛИЯ</span>
             <TextField
               variant="outlined"
               disabled={!isEditMode}
-              onChange={props.handleChange}
+              onChange={formProps.handleChange}
               name="surname"
-              value={props.values.surname}
+              value={formProps.values.surname}
+              error={Boolean(
+                formProps.touched.surname && formProps.errors.surname
+              )}
+              helperText={
+                formProps.touched.surname && formProps.errors.surname
+                  ? formProps.errors.surname
+                  : null
+              }
             />
           </form>
         )}

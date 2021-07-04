@@ -6,6 +6,9 @@
     height: 100%;
     background: url('./../../images/background.jpg') no-repeat;
     background-size: cover;
+    @media screen and (max-width: 700px) {
+      background-image: none;
+    }
   }
   &__form {
     box-sizing: border-box;
@@ -19,6 +22,13 @@
     height: max-content;
     max-height: 90%;
     box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.15);
+    @media screen and (max-width: 700px) {
+      max-height: 100%;
+      width: 100%;
+      border-radius: 0;
+      margin: 0;
+      box-shadow: none;
+    }
   }
   &__logo {
     width: 240px;
@@ -30,6 +40,15 @@
     font-size: 28px;
     line-height: 34px;
     font-weight: 400;
+    @media screen and (max-width: 700px) {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  &__input {
+    @media screen and (max-width: 700px) {
+      width: 100%;
+    }
   }
   &__button {
     background-color: #44d9e6;
@@ -48,6 +67,10 @@
     &:disabled {
       background-color: #adeff5;
       cursor: default;
+    }
+    @media screen and (max-width: 700px) {
+      width: 100%;
+      font-size: 16px;
     }
   }
   &__redirect {
