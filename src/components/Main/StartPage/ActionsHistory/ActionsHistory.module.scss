@@ -6,4 +6,8 @@
   border: 1px solid #a0a096;
   grid-row-start: 1;
   grid-row-end: 3;
+  @media screen and (max-width: 700px) {
+    grid-row-end: 2;
+    height: 80vh;
+  }
 }

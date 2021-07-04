@@ -5,7 +5,18 @@ const GET_CLIENT_DATA = 'GET_CLIENT_DATA';
 const SET_CLIENT_LOADING_STATUS = 'SET_CLIENT_LOADING_STATUS';
 
 const initialState = {
-  client: {},
+  client: {
+    surname: '',
+    name: '',
+    patronymic: '',
+    birthdate: '',
+    sex: '',
+    id: '',
+    work: '',
+    phone: '',
+    email: '',
+    address: '',
+  },
   isClientLoading: true,
 };
 

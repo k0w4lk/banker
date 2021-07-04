@@ -38,6 +38,7 @@ const Authorization = (props) => {
           {(props) => (
             <form className={styles.form} onSubmit={props.handleSubmit}>
               <TextField
+                className="l-auth-reg__input"
                 error={
                   passwordError ||
                   emailError ||
@@ -56,6 +57,7 @@ const Authorization = (props) => {
                 }\n${emailError ? emailError : ''}`}
               />
               <TextField
+                className="l-auth-reg__input"
                 error={
                   passwordError ||
                   (props.touched.password && props.errors.password)
