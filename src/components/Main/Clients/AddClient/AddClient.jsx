@@ -34,11 +34,12 @@ const AddClient = (props) => {
         initialValues={addClientInitialValues}
         validationSchema={addClientValidation(ids)}
         onSubmit={(values) => {
+          console.log(values.birthdate);
           props.addClient({
             name: values.name,
             surname: values.surname,
             patronymic: values.patronymic,
-            birthdate: values.birthdate,
+            birthdate: values.birthdate.split('-').reverse().join('.'),
             sex: values.sex,
             work: values.work,
             id: values.id,

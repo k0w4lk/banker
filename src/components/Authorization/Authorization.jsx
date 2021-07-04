@@ -6,11 +6,7 @@ import { AuthContext } from '../../context/authContext.js';
 import { useContext } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {
-  INVALID_EMAIL_ERROR,
-  WEAK_PASSWORD_ERROR,
-  REQUIRED_ERROR,
-} from './../../context/authContext.js';
+import { REQUIRED_ERROR } from './../../context/authContext.js';
 import { TextField } from '@material-ui/core';
 
 const Authorization = (props) => {
@@ -32,12 +28,8 @@ const Authorization = (props) => {
             password: '',
           }}
           validationSchema={Yup.object({
-            email: Yup.string()
-              .email(INVALID_EMAIL_ERROR)
-              .required(REQUIRED_ERROR),
-            password: Yup.string()
-              .required(REQUIRED_ERROR)
-              .min(6, WEAK_PASSWORD_ERROR),
+            email: Yup.string().required(REQUIRED_ERROR),
+            password: Yup.string().required(REQUIRED_ERROR),
           })}
           onSubmit={(values) => {
             handleLogin(values.email, values.password);

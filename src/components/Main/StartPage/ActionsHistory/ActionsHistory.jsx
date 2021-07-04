@@ -7,12 +7,14 @@ import {
   TableContainer,
   TableHead,
 } from '@material-ui/core';
+import './../../../../assets/styles/main.scss';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getActionsData } from '../../../../store/reducers/actionsReducer';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../context/authContext';
 import Preloader from './../../common/Preloader';
+import emptyBox from './../../../../assets/images/empty-box.svg';
 
 const ActionsHistory = (props) => {
   const { user } = useContext(AuthContext);
@@ -29,7 +31,7 @@ const ActionsHistory = (props) => {
       <h1>История действий</h1>
       {props.actionsLoadingStatus ? (
         <Preloader />
-      ) : (
+      ) : actions.length ? (
         <TableContainer>
           <Table>
             <TableHead>
@@ -50,6 +52,15 @@ const ActionsHistory = (props) => {
             </TableBody>
           </Table>
         </TableContainer>
+      ) : (
+        <div className="c-empty-container__wrapper">
+          <img
+            src={emptyBox}
+            className="c-empty-container__img"
+            alt="empty icon"
+          />
+          <p className="c-empty-container__text">Действия отсутствуют</p>
+        </div>
       )}
     </div>
   );

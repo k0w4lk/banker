@@ -7,6 +7,7 @@ import {
   TableContainer,
   makeStyles,
 } from '@material-ui/core';
+import './../../../../assets/styles/main.scss';
 import styles from './ClientsList.module.scss';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -14,9 +15,11 @@ import { showClients } from '../../../../store/reducers/clientsReducer';
 import Preloader from './../../common/Preloader';
 import toClientPage from './../../../../assets/images/to-client-page.svg';
 import { NavLink } from 'react-router-dom';
+import emptyBox from './../../../../assets/images/empty-box.svg';
 
 const useStyles = makeStyles({
   tableContainer: {
+    border: '1px solid #ccc',
     maxWidth: '100vw',
     height: '100%',
     '&::-webkit-scrollbar': {
@@ -33,8 +36,7 @@ const useStyles = makeStyles({
     },
   },
   tableCell: {
-    whiteSpace: 'normal',
-    wordBreak: 'break-all',
+    wordBreak: 'unset',
   },
   table: {
     overflow: 'auto',
@@ -56,86 +58,35 @@ const ClientsList = (props) => {
   } else {
     return (
       <div className={styles.clientsTableWrapper}>
-        <TableContainer className={classes.tableContainer}>
-          <Table size="small" stickyHeader className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: 'max-content' }}
-                ></TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: 'max-content' }}
-                >
-                  Фамилия
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: 'max-content' }}
-                >
-                  Имя
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: 'max-content' }}
-                >
-                  Отчество
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: '150px' }}
-                >
-                  Дата рождения
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: '80px' }}
-                >
-                  Пол
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: '190px' }}
-                >
-                  Идентификационный номер
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: '150px' }}
-                >
-                  Место работы
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: 'max-content' }}
-                >
-                  Телефон
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: '200px' }}
-                >
-                  Электронная почта
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  style={{ minWidth: 'max-content' }}
-                >
-                  Адрес
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {!clients.length ? (
+        {clients.length ? (
+          <TableContainer className={classes.tableContainer}>
+            <Table size="small" stickyHeader className={classes.table}>
+              <TableHead>
                 <TableRow>
-                  <TableCell colSpan={11} align="center">
-                    ПУСТО
+                  <TableCell className={classes.tableCell}></TableCell>
+                  <TableCell className={classes.tableCell}>Фамилия</TableCell>
+                  <TableCell className={classes.tableCell}>Имя</TableCell>
+                  <TableCell className={classes.tableCell}>Отчество</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    Дата рождения
                   </TableCell>
+                  <TableCell className={classes.tableCell}>Пол</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    Идентификационный номер
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    Место работы
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>Телефон</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    Электронная почта
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>Адрес</TableCell>
                 </TableRow>
-              ) : (
-                clients.map((client) => (
-                  <TableRow key={client.id}>
+              </TableHead>
+              <TableBody>
+                {clients.map((client) => (
+                  <TableRow key={client.id} style={{ height: 'max-content' }}>
                     <TableCell>
                       <NavLink to={`/main/clients/${client.id}/data`}>
                         <img src={toClientPage} alt="user icon" />
@@ -144,19 +95,42 @@ const ClientsList = (props) => {
                     <TableCell>{client.client.surname}</TableCell>
                     <TableCell>{client.client.name}</TableCell>
                     <TableCell>{client.client.patronymic}</TableCell>
-                    <TableCell>{client.client.birthdate}</TableCell>
-                    <TableCell>{client.client.sex}</TableCell>
-                    <TableCell>{client.client.id}</TableCell>
-                    <TableCell>{client.client.work}</TableCell>
-                    <TableCell>{client.client.phone}</TableCell>
-                    <TableCell>{client.client.email}</TableCell>
-                    <TableCell>{client.client.address}</TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.birthdate.split('-').reverse().join('.')}
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.sex}
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.id}
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.work}
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.phone}
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.email}
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {client.client.address}
+                    </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <div className="c-empty-container__wrapper">
+            <img
+              src={emptyBox}
+              className="c-empty-container__img"
+              alt="empty icon"
+            />
+            <p className="c-empty-container__text">Клиенты отсутствуют</p>
+          </div>
+        )}
       </div>
     );
   }

@@ -39,7 +39,12 @@ const Clients = (props) => {
           className={classNames(styles.addClientButton, styles.panelButton)}
         ></button>
         {props.isFilter ? (
-          <button onClick={props.showClients}>Очистить фильтр</button>
+          <button
+            className="c-add-nav-panel__text-button"
+            onClick={props.showClients}
+          >
+            Очистить фильтр
+          </button>
         ) : null}
       </AddNavPanel>
       <ClientsList />

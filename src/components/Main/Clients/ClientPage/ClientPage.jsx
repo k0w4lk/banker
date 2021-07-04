@@ -1,4 +1,4 @@
-import { Formik, useFormikContext } from 'formik';
+import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -13,13 +13,16 @@ import Preloader from '../../common/Preloader';
 import { TextField } from '@material-ui/core';
 import { addClientValidation } from '../clientDataFormProps';
 import { useRef } from 'react';
+import styles from './ClientPage.module.scss';
+import './../../../../assets/styles/main.scss';
+import classNames from 'classnames';
 
 const ClientPage = (props) => {
   const initValues = {
     surname: props.client.surname,
     name: props.client.name,
     patronymic: props.client.patronymic,
-    birthdate: props.client.birthdate,
+    birthdate: props.client.birthdate.split('.').reverse().join('-'),
     sex: props.client.sex,
     id: props.client.id,
     work: props.client.work,
@@ -41,16 +44,30 @@ const ClientPage = (props) => {
       ) : (
         <>
           <h1>{`${props.client.surname} ${props.client.name} ${props.client.patronymic}`}</h1>
-          <div>
-            <NavLink to={`/main/clients/${clientId}/data`}>Данные</NavLink>
+          <div className={styles.tabsWrapper}>
+            <NavLink
+              to={`/main/clients/${clientId}/data`}
+              className="c-add-nav-panel__tab"
+              activeClassName="c-add-nav-panel__tab_active"
+            >
+              Данные
+            </NavLink>
           </div>
           <AddNavPanel>
             {editMode ? (
               <div>
-                <button type="submit" form="client-edit-data-form">
+                <button
+                  className="c-add-nav-panel__text-button"
+                  type="submit"
+                  form="client-edit-data-form"
+                >
                   Сохранить
                 </button>
                 <button
+                  className={classNames(
+                    'c-add-nav-panel__text-button',
+                    'c-add-nav-panel__text-button_cancel'
+                  )}
                   type="button"
                   onClick={() => {
                     setEditMode(false);
@@ -61,7 +78,12 @@ const ClientPage = (props) => {
                 </button>
               </div>
             ) : (
-              <button onClick={() => setEditMode(true)}>Редактировать</button>
+              <button
+                onClick={() => setEditMode(true)}
+                className="c-add-nav-panel__text-button"
+              >
+                Редактировать
+              </button>
             )}
           </AddNavPanel>
           <Formik
@@ -90,97 +112,131 @@ const ClientPage = (props) => {
             {(formProps) => {
               return (
                 <form
+                  className={styles.form}
                   onSubmit={formProps.handleSubmit}
                   id="client-edit-data-form"
                 >
-                  <span>Фамилия</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.surname}
-                    name="surname"
-                    onChange={formProps.handleChange}
-                    error={Boolean(
-                      formProps.touched.name && formProps.errors.name
-                    )}
-                    helperText={
-                      formProps.touched.name && formProps.errors.name
-                        ? formProps.errors.name
-                        : null
-                    }
-                  />
-                  <span>Имя</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.name}
-                    name="name"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Отчетсво</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.patronymic}
-                    name="patronymic"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Дата рождения</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.birthdate}
-                    name="birthdate"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Пол</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={true}
-                    value={formProps.values.sex}
-                    name="sex"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Идентификационный номер</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={true}
-                    value={formProps.values.id}
-                    name="id"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Место работы</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.work}
-                    name="work"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Телефон</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.phone}
-                    name="phone"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Электронная почта</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.email}
-                    name="email"
-                    onChange={formProps.handleChange}
-                  />
-                  <span>Адрес</span>
-                  <TextField
-                    variant="outlined"
-                    disabled={!editMode}
-                    value={formProps.values.address}
-                    name="address"
-                    onChange={formProps.handleChange}
-                  />
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Фамилия</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.surname}
+                      name="surname"
+                      onChange={formProps.handleChange}
+                      error={Boolean(
+                        formProps.touched.name && formProps.errors.name
+                      )}
+                      helperText={
+                        formProps.touched.name && formProps.errors.name
+                          ? formProps.errors.name
+                          : null
+                      }
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Имя</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.name}
+                      name="name"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Отчетсво</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.patronymic}
+                      name="patronymic"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Дата рождения</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.birthdate}
+                      name="birthdate"
+                      type="date"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Пол</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={true}
+                      value={formProps.values.sex}
+                      name="sex"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>
+                      Идентификационный номер
+                    </span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={true}
+                      value={formProps.values.id}
+                      name="id"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Место работы</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.work}
+                      name="work"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Телефон</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.phone}
+                      name="phone"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Электронная почта</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.email}
+                      name="email"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
+                  <div className={styles.fieldWrapper}>
+                    <span className={styles.inputLabel}>Адрес</span>
+                    <TextField
+                      className={styles.input}
+                      variant="outlined"
+                      disabled={!editMode}
+                      value={formProps.values.address}
+                      name="address"
+                      onChange={formProps.handleChange}
+                    />
+                  </div>
                 </form>
               );
             }}

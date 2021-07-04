@@ -17,6 +17,8 @@ import {
 } from './../../context/authContext.js';
 import { TextField } from '@material-ui/core';
 
+const ONLY_CYRILLIC_SYMBOLS = 'Доступны только символы кириллического алфавита';
+
 const Registration = () => {
   const { handleRegistration, emailError, clearErrors, isAuthenticating } =
     useContext(AuthContext);
@@ -39,18 +41,24 @@ const Registration = () => {
                 MAX_NAME_LENGTH,
                 `Имя должно иметь не более ${MAX_NAME_LENGTH} символов`
               )
+              .matches(/^[А-Яа-я]+$/, ONLY_CYRILLIC_SYMBOLS)
               .required(REQUIRED_ERROR),
             surname: Yup.string()
               .max(
                 MAX_NAME_LENGTH,
                 `Фамилия должна иметь не более ${MAX_SURNAME_LENGTH} символов`
               )
+              .matches(/^[А-Яа-я]+$/, ONLY_CYRILLIC_SYMBOLS)
               .required(REQUIRED_ERROR),
             email: Yup.string()
               .email(INVALID_EMAIL_ERROR)
               .required(REQUIRED_ERROR),
             password: Yup.string()
               .required(REQUIRED_ERROR)
+              .matches(
+                /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g,
+                'Слабый пароль'
+              )
               .min(6, WEAK_PASSWORD_ERROR),
             confirmPassword: Yup.string()
               .required(REQUIRED_ERROR)

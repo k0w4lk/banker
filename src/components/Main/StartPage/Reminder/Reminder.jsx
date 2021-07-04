@@ -7,6 +7,7 @@ import {
   TextField,
   makeStyles,
 } from '@material-ui/core';
+import './../../../../assets/styles/main.scss';
 import { useContext, useState } from 'react';
 import { connect } from 'react-redux';
 import styles from './Reminder.module.scss';
@@ -123,9 +124,13 @@ const Reminder = (props) => {
           </Table>
         </TableContainer>
       ) : (
-        <div className={styles.noTasksWrapper}>
-          <img src={emptyBox} className={styles.noTasksImg} alt="empty icon" />
-          <p className={styles.noTasksText}>Напоминаний нет</p>
+        <div className="c-empty-container__wrapper">
+          <img
+            src={emptyBox}
+            className="c-empty-container__img"
+            alt="empty icon"
+          />
+          <p className="c-empty-container__text">Напоминаний нет</p>
         </div>
       )}
     </div>

@@ -15,7 +15,7 @@ export const INVALID_EMAIL_ERROR = 'Неверный элекронный адр
 export const USER_NOT_FOUND_ERROR = 'Пользователь не найден';
 export const USER_DISABLED_ERROR = 'Пользователь заблокирован';
 export const WRONG_PASSWORD_ERROR =
-  'Неверный адрес электронной почты или пароль';
+  'Неверен логин или пароль. Попробуйте снова или зарегистрируйтесь';
 export const SOME_ERROR = 'Произошла ошибка';
 export const REQUIRED_ERROR = 'Обязательное поле';
 export const PASSWORD_MISMATCH_ERROR = 'Пароли должны совпадать';
@@ -48,15 +48,11 @@ const Auth = (props) => {
       })
       .catch((err) => {
         switch (err.code) {
-          case 'auth/invalid-email':
-            setEmailError(INVALID_EMAIL_ERROR);
-            break;
           case 'auth/user-disabled':
             setEmailError(USER_DISABLED_ERROR);
             break;
+          case 'auth/invalid-email':
           case 'auth/user-not-found':
-            setEmailError(USER_NOT_FOUND_ERROR);
-            break;
           case 'auth/wrong-password':
             setPasswordError(WRONG_PASSWORD_ERROR);
             break;

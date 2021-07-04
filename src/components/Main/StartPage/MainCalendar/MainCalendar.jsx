@@ -15,7 +15,7 @@ const MainCalendar = (props) => {
     props.setPickedDate(date);
     props.getTasksForCurrentDate({
       id: user.uid,
-      date: date.toLocaleDateString().replaceAll('.', '-'),
+      date: date.toLocaleDateString('ru').replaceAll('.', '-'),
     });
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
