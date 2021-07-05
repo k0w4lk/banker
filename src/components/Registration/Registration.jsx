@@ -15,7 +15,8 @@ import {
   MAX_NAME_LENGTH,
   MAX_SURNAME_LENGTH,
 } from './../../context/authContext.js';
-import { TextField } from '@material-ui/core';
+import { TextField, Tooltip } from '@material-ui/core';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 const ONLY_CYRILLIC_SYMBOLS = 'Доступны только символы кириллического алфавита';
 
@@ -26,7 +27,31 @@ const Registration = () => {
     <div className="l-auth-reg__wrapper">
       <div className={classNames('l-auth-reg__form', styles.formWrapper)}>
         <img src={authLogo} className="l-auth-reg__logo" alt="auth-logo" />
-        <h1 className="l-auth-reg__heading">РЕГИСТРАЦИЯ</h1>
+        <div className="l-auth-reg__heading-wrapper">
+          <h1 className="l-auth-reg__heading">РЕГИСТРАЦИЯ</h1>
+          <Tooltip
+            title={
+              <>
+                <h2>Требования к регистрационным полям:</h2>
+                <br />
+                <h3>Имя/фамилия</h3>
+                <p>
+                  Используются только символы кирллического алфавита. Длина не
+                  более 25 символов
+                </p>
+                <br />
+                <h3>Пароль</h3>
+                <p>
+                  Длина от 6 символов. Обязательны маленькая и большая латинские
+                  буквы, цифра и один из следующих символов: !@#$%^&*
+                </p>
+              </>
+            }
+            placement="bottom-end"
+          >
+            <HelpOutlineIcon />
+          </Tooltip>
+        </div>
         <Formik
           initialValues={{
             name: '',

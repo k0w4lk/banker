@@ -40,7 +40,9 @@ const ClientPage = (props) => {
     <div>
       <AddNavPanel />
       {props.isClientLoading ? (
-        <Preloader />
+        <div className={styles.preloaderWrapper}>
+          <Preloader />
+        </div>
       ) : (
         <>
           <h1>{`${props.client.surname} ${props.client.name} ${props.client.patronymic}`}</h1>
