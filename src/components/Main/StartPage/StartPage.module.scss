@@ -4,11 +4,14 @@
 .contentWrapper {
   display: grid;
   height: calc(100% - 40px);
-  grid-template: max-content / 4fr 3fr;
-  grid-auto-rows: 1fr;
+  grid-template: 270px calc(100% - 280px) / 4fr 3fr;
   grid-gap: 10px;
   padding: 6px;
   @media screen and (max-width: 700px) {
     grid-template-columns: 1fr;
+    grid-template-rows: max-content;
+    grid-auto-rows: max-content;
+    width: 100%;
+    height: max-content;
   }
 }

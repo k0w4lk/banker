@@ -15,8 +15,27 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../../context/authContext';
 import Preloader from './../../common/Preloader';
 import emptyBox from './../../../../assets/images/empty-box.svg';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+  tableContainer: {
+    '&::-webkit-scrollbar': {
+      width: '6px',
+      height: '6px',
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: '#C5DEFB',
+      borderRadius: '5px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#60A9E0',
+      borderRadius: '5px',
+    },
+  },
+});
 
 const ActionsHistory = (props) => {
+  const classes = useStyles();
   const { user } = useContext(AuthContext);
   useEffect(() => {
     props.getActionsData({ id: user.uid });
@@ -32,7 +51,7 @@ const ActionsHistory = (props) => {
       {props.actionsLoadingStatus ? (
         <Preloader />
       ) : actions.length ? (
-        <TableContainer>
+        <TableContainer className={classes.tableContainer}>
           <Table>
             <TableHead>
               <TableRow>

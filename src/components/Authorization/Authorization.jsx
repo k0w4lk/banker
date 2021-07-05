@@ -21,7 +21,9 @@ const Authorization = (props) => {
     <div className="l-auth-reg__wrapper">
       <div className="l-auth-reg__form">
         <img src={authLogo} className="l-auth-reg__logo" alt="auth-logo" />
-        <h1 className="l-auth-reg__heading">АВТОРИЗАЦИЯ</h1>
+        <div className="l-auth-reg__heading-wrapper">
+          <h1 className="l-auth-reg__heading">АВТОРИЗАЦИЯ</h1>
+        </div>
         <Formik
           initialValues={{
             email: '',
@@ -44,6 +46,7 @@ const Authorization = (props) => {
                   emailError ||
                   (props.touched.email && props.errors.email)
                 }
+                disabled={isAuthenticating}
                 autoFocus={true}
                 onChange={props.handleChange}
                 value={props.values.email}
@@ -57,6 +60,7 @@ const Authorization = (props) => {
                 }\n${emailError ? emailError : ''}`}
               />
               <TextField
+                disabled={isAuthenticating}
                 className="l-auth-reg__input"
                 error={
                   passwordError ||

@@ -44,7 +44,9 @@ export const addClientValidation = (ids = []) =>
         )
         .matches(/^[А-Яа-я]+$/, ONLY_CYRILLIC_SYMBOLS)
         .required(REQUIRED_ERROR),
-      birthdate: Yup.date().required(REQUIRED_ERROR),
+      birthdate: Yup.date()
+        .max(new Date(), 'Дата рождения не может быть позже текущей даты')
+        .required(REQUIRED_ERROR),
       sex: Yup.string().required(REQUIRED_ERROR),
       work: Yup.string().max(
         MAX_WORK_LENGTH,
@@ -56,7 +58,7 @@ export const addClientValidation = (ids = []) =>
         .required(REQUIRED_ERROR),
       phone: Yup.string()
         .ensure()
-        .matches(/^[+]{1}[0-9]{12}$/, WRONG_PHONE_NUMBER_FORMAT)
+        .matches(/^$|^[+]{1}[0-9]{12}$/, WRONG_PHONE_NUMBER_FORMAT)
         .when(['email', 'address'], {
           is: (email, address) => !email && !address,
           then: Yup.string().required(REQUIRED_ERROR),
