@@ -88,7 +88,6 @@ const Authorization = (props) => {
             </form>
           )}
         </Formik>
-
         <div className="l-auth-reg__redirect">
           <span className="l-auth-reg__text">НЕТ УЧЕТНОЙ ЗАПИСИ?&nbsp;</span>
           <NavLink
