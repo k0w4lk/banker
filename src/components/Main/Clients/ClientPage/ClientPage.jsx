@@ -16,6 +16,9 @@ import { useRef } from 'react';
 import styles from './ClientPage.module.scss';
 import './../../../../assets/styles/main.scss';
 import classNames from 'classnames';
+import { transferActionData } from '../../../../store/reducers/actionsReducer';
+import { useContext } from 'react';
+import { AuthContext } from '../../../../context/authContext';
 
 const ClientPage = (props) => {
   const initValues = {
@@ -31,6 +34,7 @@ const ClientPage = (props) => {
     address: props.client.address,
   };
   const { clientId } = useParams();
+  const { user } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   useEffect(() => {
     props.getCurrentClientData(clientId);
@@ -40,7 +44,9 @@ const ClientPage = (props) => {
     <div>
       <AddNavPanel />
       {props.isClientLoading ? (
-        <Preloader />
+        <div className={styles.preloaderWrapper}>
+          <Preloader />
+        </div>
       ) : (
         <>
           <h1>{`${props.client.surname} ${props.client.name} ${props.client.patronymic}`}</h1>
@@ -105,6 +111,12 @@ const ClientPage = (props) => {
                   email: values.email,
                   address: values.address,
                 },
+              });
+              props.transferActionData({
+                id: user.uid,
+                date: new Date().toLocaleDateString('ru'),
+                time: new Date().toLocaleTimeString('ru'),
+                action: `Изменена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
               });
               setEditMode(false);
             }}
@@ -331,4 +343,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getCurrentClientData,
   setCurrentClientData,
+  transferActionData,
 })(ClientPage);

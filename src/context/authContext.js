@@ -108,8 +108,14 @@ const Auth = (props) => {
   };
 
   const handleLogout = () => {
-    firebase.auth().signOut();
-    props.history.push('/');
+    setIsAuthenticating(true);
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setIsAuthenticating(false);
+        props.history.push('/');
+      });
   };
 
   useEffect(() => {

@@ -50,7 +50,7 @@ const ClientsList = (props) => {
     props.showClients();
   }, []);
   const clients = [];
-  for (let client in props.clients) {
+  for (let client in props.isFilter ? props.filteredClients : props.clients) {
     clients.push({ client: props.clients[client], id: client });
   }
   if (props.isClientsLoading) {
@@ -139,6 +139,8 @@ const ClientsList = (props) => {
 const mapStateToProps = (state) => ({
   clients: state.clients.clients,
   isClientsLoading: state.clients.isClientsLoading,
+  isFilter: state.clients.isFilter,
+  filteredClients: state.clients.filteredClients,
 });
 
 export default connect(mapStateToProps, { showClients })(ClientsList);
