@@ -42,6 +42,7 @@ export const getActionsData = (data) => (dispatch) => {
 };
 
 export const transferActionData = (data) => (dispatch) => {
+  console.log(data);
   const actionsRef = firebase
     .database()
     .ref(`/users/${data.id}/actions`)

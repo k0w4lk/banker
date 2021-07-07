@@ -8,6 +8,7 @@ const SET_FILTER_STATUS = 'SET_FILTER_STATUS';
 
 const initialState = {
   clients: {},
+  filteredClients: {},
   isClientsLoading: true,
   isFilter: false,
 };
@@ -108,7 +109,7 @@ const clientsReducer = (state = initialState, action) => {
     case SET_FILTERED_CLIENTS:
       return {
         ...state,
-        clients: action.payload.clients,
+        filteredClients: action.payload.clients,
       };
     case SET_FILTER_STATUS: {
       return {

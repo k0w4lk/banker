@@ -15,42 +15,48 @@ import {
   MAX_NAME_LENGTH,
   MAX_SURNAME_LENGTH,
 } from './../../context/authContext.js';
-import { TextField, Tooltip } from '@material-ui/core';
+import { TextField, Tooltip, ClickAwayListener } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import { useState } from 'react';
 
 const ONLY_CYRILLIC_SYMBOLS = 'Доступны только символы кириллического алфавита';
 
 const Registration = () => {
   const { handleRegistration, emailError, clearErrors, isAuthenticating } =
     useContext(AuthContext);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   return (
     <div className="l-auth-reg__wrapper">
       <div className={classNames('l-auth-reg__form', styles.formWrapper)}>
         <img src={authLogo} className="l-auth-reg__logo" alt="auth-logo" />
         <div className="l-auth-reg__heading-wrapper">
           <h1 className="l-auth-reg__heading">РЕГИСТРАЦИЯ</h1>
-          <Tooltip
-            title={
-              <>
-                <h2>Требования к регистрационным полям:</h2>
-                <br />
-                <h3>Имя/фамилия</h3>
-                <p>
-                  Используются только символы кирллического алфавита. Длина не
-                  более 25 символов
-                </p>
-                <br />
-                <h3>Пароль</h3>
-                <p>
-                  Длина от 6 символов. Обязательны маленькая и большая латинские
-                  буквы, цифра и один из следующих символов: !@#$%^&*
-                </p>
-              </>
-            }
-            placement="bottom-end"
-          >
-            <HelpOutlineIcon />
-          </Tooltip>
+          <ClickAwayListener onClickAway={() => setTooltipOpen(false)}>
+            <Tooltip
+              open={tooltipOpen}
+              title={
+                <>
+                  <h2>Требования к регистрационным полям:</h2>
+                  <br />
+                  <h3>Имя/фамилия</h3>
+                  <p>
+                    Используются только символы кирллического алфавита. Длина не
+                    более 25 символов
+                  </p>
+                  <br />
+                  <h3>Пароль</h3>
+                  <p>
+                    Длина от 6 символов. Обязательны маленькая и большая
+                    латинские буквы, цифра и один из следующих символов:
+                    !@#$%^&*
+                  </p>
+                </>
+              }
+              placement="bottom-end"
+            >
+              <HelpOutlineIcon onClick={() => setTooltipOpen(!tooltipOpen)} />
+            </Tooltip>
+          </ClickAwayListener>
         </div>
         <Formik
           initialValues={{
@@ -103,7 +109,7 @@ const Registration = () => {
               <div className={styles.inputsWrapper}>
                 <TextField
                   className={styles.input}
-                  error={props.touched.name && props.errors.name}
+                  error={Boolean(props.touched.name && props.errors.name)}
                   label="ИМЯ"
                   value={props.values.name}
                   onChange={props.handleChange}
@@ -116,7 +122,7 @@ const Registration = () => {
                 />
                 <TextField
                   className={styles.input}
-                  error={props.touched.surname && props.errors.surname}
+                  error={Boolean(props.touched.surname && props.errors.surname)}
                   label="ФАМИЛИЯ"
                   value={props.values.surname}
                   onChange={props.handleChange}
@@ -129,9 +135,9 @@ const Registration = () => {
                 />
                 <TextField
                   className={styles.input}
-                  error={
+                  error={Boolean(
                     emailError || (props.touched.email && props.errors.email)
-                  }
+                  )}
                   value={props.values.email}
                   onChange={props.handleChange}
                   onFocus={clearErrors}
@@ -145,7 +151,9 @@ const Registration = () => {
                 />
                 <TextField
                   className={styles.input}
-                  error={props.touched.password && props.errors.password}
+                  error={Boolean(
+                    props.touched.password && props.errors.password
+                  )}
                   value={props.values.password}
                   type="password"
                   label="ПАРОЛЬ"
@@ -159,10 +167,10 @@ const Registration = () => {
                 />
                 <TextField
                   className={styles.input}
-                  error={
+                  error={Boolean(
                     props.touched.confirmPassword &&
-                    props.errors.confirmPassword
-                  }
+                      props.errors.confirmPassword
+                  )}
                   type="password"
                   label="ПОДТВЕРДИТЕ ПАРОЛЬ"
                   value={props.values.confirmPassword}

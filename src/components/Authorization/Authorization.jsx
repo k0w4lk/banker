@@ -41,11 +41,11 @@ const Authorization = (props) => {
             <form className={styles.form} onSubmit={props.handleSubmit}>
               <TextField
                 className="l-auth-reg__input"
-                error={
+                error={Boolean(
                   passwordError ||
-                  emailError ||
-                  (props.touched.email && props.errors.email)
-                }
+                    emailError ||
+                    (props.touched.email && props.errors.email)
+                )}
                 disabled={isAuthenticating}
                 autoFocus={true}
                 onChange={props.handleChange}
@@ -62,10 +62,10 @@ const Authorization = (props) => {
               <TextField
                 disabled={isAuthenticating}
                 className="l-auth-reg__input"
-                error={
+                error={Boolean(
                   passwordError ||
-                  (props.touched.password && props.errors.password)
-                }
+                    (props.touched.password && props.errors.password)
+                )}
                 value={props.values.password}
                 onChange={props.handleChange}
                 name="password"

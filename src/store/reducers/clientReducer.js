@@ -47,7 +47,6 @@ export const getCurrentClientData = (data) => (dispatch) => {
     .database()
     .ref(`/clients/${data}`)
     .once('value', (val) => {
-      console.log({ ...val.val() });
       dispatch(getClientData({ ...val.val() }));
     })
     .then(() => {
@@ -56,6 +55,7 @@ export const getCurrentClientData = (data) => (dispatch) => {
 };
 
 export const setCurrentClientData = (data) => (dispatch) => {
+  console.log(data);
   firebase.database().ref(`/clients/${data.id}`).set(data.client);
   dispatch(setClientData(data.client));
 };
