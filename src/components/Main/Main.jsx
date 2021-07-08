@@ -4,7 +4,7 @@ import Profile from './Profile';
 import styles from './Main.module.scss';
 import { AuthContext } from '../../context/authContext';
 import { useContext } from 'react';
-import Preloader from './common/Preloader/Preloader';
+import Preloader from './../common/Preloader';
 import Clients from './Clients';
 import StartPage from './StartPage';
 import ClientPage from './Clients/ClientPage';

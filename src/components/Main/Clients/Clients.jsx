@@ -1,4 +1,4 @@
-import AddNavPanel from '../common/AddNavPanel/AddNavPanel.jsx';
+import AddNavPanel from './../../common/AddNavPanel';
 import Dialog from '@material-ui/core/Dialog';
 import styles from './Clients.module.scss';
 import './../../../assets/styles/main.scss';
@@ -9,6 +9,7 @@ import ClientsList from './ClientsList';
 import SearchClient from './SearchClient';
 import { connect } from 'react-redux';
 import { showClients } from '../../../store/reducers/clientsReducer.js';
+import AddNavPanelTextButton from '../../common/AddNavPanel/TextButton';
 
 const Clients = (props) => {
   const [openAddClient, setOpenAddClient] = useState(false);
@@ -39,12 +40,10 @@ const Clients = (props) => {
           className={classNames(styles.addClientButton, styles.panelButton)}
         ></button>
         {props.isFilter ? (
-          <button
-            className="c-add-nav-panel__text-button"
+          <AddNavPanelTextButton
+            text="Очистить фильтр"
             onClick={props.showClients}
-          >
-            Очистить фильтр
-          </button>
+          />
         ) : null}
       </AddNavPanel>
       <ClientsList />

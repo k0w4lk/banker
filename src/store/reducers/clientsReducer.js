@@ -20,11 +20,13 @@ const setFilterStatus = (status) => ({
   },
 });
 
-const setClient = (clientId, data) => ({
+const setClient = (clientDatabaseId, data) => ({
   type: ADD_CLIENT,
   payload: {
-    clientId,
-    data,
+    client: {
+      clientDatabaseId,
+      ...data,
+    },
   },
 });
 
@@ -51,23 +53,10 @@ const setIsClientsLoadingStatus = (status) => ({
 
 export const addClient = (data) => (dispatch) => {
   const clientsRef = firebase.database().ref(`/clients`).push();
-  const clientId = clientsRef.key;
-  clientsRef
-    .set({
-      name: data.name,
-      surname: data.surname,
-      patronymic: data.patronymic,
-      birthdate: data.birthdate,
-      sex: data.sex,
-      work: data.work,
-      id: data.id,
-      phone: data.phone,
-      email: data.email,
-      address: data.address,
-    })
-    .then(() => {
-      dispatch(setClient(clientId, data));
-    });
+  const clientDatabaseId = clientsRef.key;
+  clientsRef.set({ ...data, clientDatabaseId }).then(() => {
+    dispatch(setClient(clientDatabaseId, data));
+  });
 };
 
 export const showClients = (data) => (dispatch) => {
@@ -96,7 +85,7 @@ const clientsReducer = (state = initialState, action) => {
         ...state,
         clients: {
           ...state.clients,
-          [action.payload.clientId]: action.payload.data,
+          ...action.payload.client,
         },
       };
     case GET_CLIENTS:

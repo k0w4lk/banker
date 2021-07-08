@@ -2,14 +2,14 @@ import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import AddNavPanel from '../../common/AddNavPanel';
+import AddNavPanel from './../../../common/AddNavPanel';
 import {
   getCurrentClientData,
   setCurrentClientData,
 } from '../../../../store/reducers/clientReducer';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import Preloader from '../../common/Preloader';
+import Preloader from './../../../common/Preloader';
 import { TextField } from '@material-ui/core';
 import { addClientValidation } from '../clientDataFormProps';
 import { useRef } from 'react';
@@ -19,13 +19,15 @@ import classNames from 'classnames';
 import { transferActionData } from '../../../../store/reducers/actionsReducer';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../context/authContext';
+import AddNavPanelTextButton from '../../../common/AddNavPanel/TextButton';
 
 const ClientPage = (props) => {
+  // debugger;
   const initValues = {
     surname: props.client.surname,
     name: props.client.name,
     patronymic: props.client.patronymic,
-    birthdate: props.client.birthdate.split('.').reverse().join('-'),
+    birthdate: props.client.birthdate.split('.').reverse().join('-') || '',
     sex: props.client.sex,
     id: props.client.id,
     work: props.client.work,
@@ -44,9 +46,7 @@ const ClientPage = (props) => {
     <div>
       <AddNavPanel />
       {props.isClientLoading ? (
-        <div className={styles.preloaderWrapper}>
-          <Preloader />
-        </div>
+        <Preloader />
       ) : (
         <>
           <h1>{`${props.client.surname} ${props.client.name} ${props.client.patronymic}`}</h1>
@@ -62,13 +62,11 @@ const ClientPage = (props) => {
           <AddNavPanel>
             {editMode ? (
               <div>
-                <button
-                  className="c-add-nav-panel__text-button"
+                <AddNavPanelTextButton
                   type="submit"
                   form="client-edit-data-form"
-                >
-                  Сохранить
-                </button>
+                  text="Сохранить"
+                />
                 <button
                   className={classNames(
                     'c-add-nav-panel__text-button',
@@ -98,7 +96,7 @@ const ClientPage = (props) => {
             validationSchema={addClientValidation()}
             onSubmit={(values) => {
               props.setCurrentClientData({
-                id: clientId,
+                clientDatabaseId: clientId,
                 client: {
                   surname: values.surname,
                   name: values.name,

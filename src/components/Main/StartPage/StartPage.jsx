@@ -1,4 +1,4 @@
-import AddNavPanel from '../common/AddNavPanel';
+import AddNavPanel from './../../common/AddNavPanel';
 import MainCalendar from './MainCalendar';
 import ActionsHistory from './ActionsHistory';
 import Reminder from './Reminder';

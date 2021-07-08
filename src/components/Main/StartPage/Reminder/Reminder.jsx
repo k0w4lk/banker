@@ -18,7 +18,7 @@ import {
 import { useEffect } from 'react';
 import { AuthContext } from '../../../../context/authContext';
 import emptyBox from './../../../../assets/images/empty-box.svg';
-import Preloader from './../../../Main/common/Preloader';
+import Preloader from './../../../common/Preloader';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -52,17 +52,8 @@ const Reminder = (props) => {
   const [task, setTask] = useState('');
   const [inputError, setInputError] = useState(false);
   const { user } = useContext(AuthContext);
-  const tasks = [];
-  for (let task in props.tasks) {
-    tasks.push({ task: props.tasks[task], id: task });
-  }
-
-  useEffect(() => {
-    props.getTasksForCurrentDate({
-      id: user.uid,
-      date: props.date.toLocaleDateString('ru').replaceAll('.', '-'),
-    });
-  }, []);
+  const tasks = Object.values(props.tasks);
+  const tasksIds = Object.keys(props.tasks);
 
   const onAddTaskHandler = () => {
     if (!task.trim().length) return;
@@ -73,6 +64,13 @@ const Reminder = (props) => {
     });
     setTask('');
   };
+
+  useEffect(() => {
+    props.getTasksForCurrentDate({
+      id: user.uid,
+      date: props.date.toLocaleDateString('ru').replaceAll('.', '-'),
+    });
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -113,10 +111,10 @@ const Reminder = (props) => {
         <TableContainer className={classes.tableContainer}>
           <Table size="small" stickyHeader>
             <TableBody>
-              {tasks.map((task) => {
+              {tasks.map((task, i) => {
                 return (
-                  <TableRow key={task.id}>
-                    <TableCell className={classes.cell}>{task.task}</TableCell>
+                  <TableRow key={tasksIds[i]}>
+                    <TableCell className={classes.cell}>{task}</TableCell>
                   </TableRow>
                 );
               })}

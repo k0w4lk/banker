@@ -1,8 +1,9 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import './../../../../assets/styles/main.scss';
+import styles from './Preloader.module.scss';
+
 const Preloader = () => {
   return (
-    <div className="preloader__wrapper">
+    <div className={styles.wrapper}>
       <CircularProgress />
     </div>
   );

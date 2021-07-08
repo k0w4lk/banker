@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { getActionsData } from '../../../../store/reducers/actionsReducer';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../context/authContext';
-import Preloader from './../../common/Preloader';
+import Preloader from './../../../common/Preloader';
 import emptyBox from './../../../../assets/images/empty-box.svg';
 import { makeStyles } from '@material-ui/styles';
 

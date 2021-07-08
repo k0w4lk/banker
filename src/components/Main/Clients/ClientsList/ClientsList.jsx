@@ -12,7 +12,7 @@ import styles from './ClientsList.module.scss';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { showClients } from '../../../../store/reducers/clientsReducer';
-import Preloader from './../../common/Preloader';
+import Preloader from './../../../common/Preloader';
 import toClientPage from './../../../../assets/images/to-client-page.svg';
 import { NavLink } from 'react-router-dom';
 import emptyBox from './../../../../assets/images/empty-box.svg';
@@ -49,10 +49,10 @@ const ClientsList = (props) => {
   useEffect(() => {
     props.showClients();
   }, []);
-  const clients = [];
-  for (let client in props.isFilter ? props.filteredClients : props.clients) {
-    clients.push({ client: props.clients[client], id: client });
-  }
+  const clients = props.isFilter
+    ? Object.values(props.filteredClients)
+    : Object.values(props.clients);
+  console.log(clients);
   if (props.isClientsLoading) {
     return <Preloader />;
   } else {
@@ -86,35 +86,40 @@ const ClientsList = (props) => {
               </TableHead>
               <TableBody>
                 {clients.map((client) => (
-                  <TableRow key={client.id} style={{ height: 'max-content' }}>
+                  <TableRow
+                    key={client.clientDatabaseId}
+                    style={{ height: 'max-content' }}
+                  >
                     <TableCell>
-                      <NavLink to={`/main/clients/${client.id}/data`}>
+                      <NavLink
+                        to={`/main/clients/${client.clientDatabaseId}/data`}
+                      >
                         <img src={toClientPage} alt="user icon" />
                       </NavLink>
                     </TableCell>
-                    <TableCell>{client.client.surname}</TableCell>
-                    <TableCell>{client.client.name}</TableCell>
-                    <TableCell>{client.client.patronymic}</TableCell>
+                    <TableCell>{client.surname}</TableCell>
+                    <TableCell>{client.name}</TableCell>
+                    <TableCell>{client.patronymic}</TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.birthdate.split('-').reverse().join('.')}
+                      {client.birthdate.split('-').reverse().join('.')}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.sex}
+                      {client.sex}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.id}
+                      {client.id}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.work}
+                      {client.work}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.phone}
+                      {client.phone}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.email}
+                      {client.email}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.client.address}
+                      {client.address}
                     </TableCell>
                   </TableRow>
                 ))}

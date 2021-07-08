@@ -13,25 +13,4 @@
       background-color: #9cd3fc;
     }
   }
-  &__text-button {
-    padding: 6px 4px;
-    background-color: #3daaf3;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    &:hover {
-      background-color: lighten($color: #3daaf3, $amount: 10%);
-    }
-    &_cancel {
-      background-color: #ccc;
-      margin-left: 12px;
-      &:hover {
-        background-color: lighten($color: #ccc, $amount: 10%);
-      }
-    }
-    &:disabled {
-      background-color: #3daaf3;
-      cursor: default;
-    }
-  }
 }

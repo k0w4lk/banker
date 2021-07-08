@@ -1,6 +1,6 @@
 import { AuthContext } from '../../../context/authContext.js';
 import { useContext, useState } from 'react';
-import AddNavPanel from '../common/AddNavPanel/AddNavPanel.jsx';
+import AddNavPanel from './../../common/AddNavPanel';
 import styles from './Profile.module.scss';
 import './../../../assets/styles/main.scss';
 import classNames from 'classnames';

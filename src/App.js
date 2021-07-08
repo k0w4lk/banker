@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import Authorization from './components/Authorization';
 import Registration from './components/Registration';
 import Main from './components/Main';
-import Preloader from './components/Main/common/Preloader';
+import Preloader from './components/common/Preloader';
 
 function App() {
   const { user, isCheckingForUser } = useContext(AuthContext);

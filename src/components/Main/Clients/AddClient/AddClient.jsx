@@ -38,7 +38,6 @@ const AddClient = (props) => {
         initialValues={addClientInitialValues}
         validationSchema={addClientValidation(ids)}
         onSubmit={(values) => {
-          console.log(values.birthdate);
           props.addClient({
             name: values.name,
             surname: values.surname,
