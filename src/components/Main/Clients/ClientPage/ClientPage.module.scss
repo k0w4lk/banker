@@ -38,3 +38,11 @@
     min-width: 240px;
   }
 }
+
+.cancelButton {
+  background-color: #ccc;
+  margin-left: 12px;
+  &:hover {
+    background-color: lighten($color: #ccc, $amount: 10%);
+  }
+}

@@ -1,10 +1,10 @@
-import AddNavPanel from './../../common/AddNavPanel';
-import MainCalendar from './MainCalendar';
-import ActionsHistory from './ActionsHistory';
-import Reminder from './Reminder';
 import 'react-calendar/dist/Calendar.css';
-import styles from './StartPage.module.scss';
 import './../../../assets/styles/main.scss';
+import AddNavPanel from './../../common/AddNavPanel';
+import ActionsHistory from './ActionsHistory';
+import MainCalendar from './MainCalendar';
+import Reminder from './Reminder';
+import styles from './StartPage.module.scss';
 
 const StartPage = () => {
   return (

@@ -1,24 +1,23 @@
 import {
+  makeStyles,
   Table,
-  TableRow,
   TableBody,
   TableCell,
   TableContainer,
+  TableRow,
   TextField,
-  makeStyles,
 } from '@material-ui/core';
-import './../../../../assets/styles/main.scss';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import styles from './Reminder.module.scss';
+import { AuthContext } from '../../../../context/authContext';
+import EmptyContainer from '../../../common/EmptyContainer/EmptyContainer';
+import './../../../../assets/styles/main.scss';
 import {
   getTasksForCurrentDate,
   setTaskForCurrentDate,
 } from './../../../../store/reducers/calendarReminderReducer';
-import { useEffect } from 'react';
-import { AuthContext } from '../../../../context/authContext';
-import emptyBox from './../../../../assets/images/empty-box.svg';
 import Preloader from './../../../common/Preloader';
+import styles from './Reminder.module.scss';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -122,14 +121,7 @@ const Reminder = (props) => {
           </Table>
         </TableContainer>
       ) : (
-        <div className="c-empty-container__wrapper">
-          <img
-            src={emptyBox}
-            className="c-empty-container__img"
-            alt="empty icon"
-          />
-          <p className="c-empty-container__text">Напоминаний нет</p>
-        </div>
+        <EmptyContainer text="Напоминания отсутствуют" />
       )}
     </div>
   );

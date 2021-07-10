@@ -1,13 +1,13 @@
-import { Route } from 'react-router';
-import Navigation from './Navigation';
-import Profile from './Profile';
-import styles from './Main.module.scss';
-import { AuthContext } from '../../context/authContext';
 import { useContext } from 'react';
+import { Route } from 'react-router';
+import { AuthContext } from '../../context/authContext';
 import Preloader from './../common/Preloader';
 import Clients from './Clients';
-import StartPage from './StartPage';
 import ClientPage from './Clients/ClientPage';
+import styles from './Main.module.scss';
+import Navigation from './Navigation';
+import Profile from './Profile';
+import StartPage from './StartPage';
 
 const Main = () => {
   const { user } = useContext(AuthContext);

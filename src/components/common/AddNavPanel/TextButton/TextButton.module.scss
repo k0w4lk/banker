@@ -7,13 +7,6 @@
   &:hover {
     background-color: lighten($color: #3daaf3, $amount: 10%);
   }
-  &_cancel {
-    background-color: #ccc;
-    margin-left: 12px;
-    &:hover {
-      background-color: lighten($color: #ccc, $amount: 10%);
-    }
-  }
   &:disabled {
     background-color: #3daaf3;
     cursor: default;

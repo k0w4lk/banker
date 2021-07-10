@@ -1,36 +1,35 @@
-import styles from './Registration.module.scss';
-import authLogo from './../../assets/images/logo.svg';
+import { ClickAwayListener, TextField, Tooltip } from '@material-ui/core';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import classNames from 'classnames';
-import './../../assets/styles/main.scss';
-import { NavLink } from 'react-router-dom';
-import { AuthContext } from '../../context/authContext.js';
-import { useContext } from 'react';
 import { Formik } from 'formik';
+import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
+import { AuthContext } from '../../context/authContext.js';
 import {
   INVALID_EMAIL_ERROR,
-  WEAK_PASSWORD_ERROR,
-  REQUIRED_ERROR,
-  PASSWORD_MISMATCH_ERROR,
   MAX_NAME_LENGTH,
   MAX_SURNAME_LENGTH,
-} from './../../context/authContext.js';
-import { TextField, Tooltip, ClickAwayListener } from '@material-ui/core';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import { useState } from 'react';
-
-const ONLY_CYRILLIC_SYMBOLS = 'Доступны только символы кириллического алфавита';
+  ONLY_CYRILLIC_SYMBOLS,
+  PASSWORD_MISMATCH_ERROR,
+  REQUIRED_ERROR,
+  WEAK_PASSWORD_ERROR,
+} from '../../errorMessages';
+import AuthRegContainer from '../AuthRegContainer';
+import AuthRegHeading from '../AuthRegHeading/AuthRegHeading.jsx';
+import AuthRegLogo from '../AuthRegLogo';
+import './../../assets/styles/main.scss';
+import styles from './Registration.module.scss';
 
 const Registration = () => {
   const { handleRegistration, emailError, clearErrors, isAuthenticating } =
     useContext(AuthContext);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   return (
-    <div className="l-auth-reg__wrapper">
+    <AuthRegContainer className="l-auth-reg__wrapper">
       <div className={classNames('l-auth-reg__form', styles.formWrapper)}>
-        <img src={authLogo} className="l-auth-reg__logo" alt="auth-logo" />
-        <div className="l-auth-reg__heading-wrapper">
-          <h1 className="l-auth-reg__heading">РЕГИСТРАЦИЯ</h1>
+        <AuthRegLogo />
+        <AuthRegHeading heading="РЕГИСТРАЦИЯ">
           <ClickAwayListener onClickAway={() => setTooltipOpen(false)}>
             <Tooltip
               open={tooltipOpen}
@@ -57,7 +56,7 @@ const Registration = () => {
               <HelpOutlineIcon onClick={() => setTooltipOpen(!tooltipOpen)} />
             </Tooltip>
           </ClickAwayListener>
-        </div>
+        </AuthRegHeading>
         <Formik
           initialValues={{
             name: '',
@@ -201,7 +200,7 @@ const Registration = () => {
           </NavLink>
         </div>
       </div>
-    </div>
+    </AuthRegContainer>
   );
 };
 

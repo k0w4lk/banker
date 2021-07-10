@@ -1,28 +1,22 @@
+import { TextField } from '@material-ui/core';
 import { Formik } from 'formik';
-import { useEffect } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import AddNavPanel from './../../../common/AddNavPanel';
+import { NavLink, useParams } from 'react-router-dom';
+import { AuthContext } from '../../../../context/authContext';
+import { transferActionData } from '../../../../store/reducers/actionsReducer';
 import {
   getCurrentClientData,
   setCurrentClientData,
 } from '../../../../store/reducers/clientReducer';
-import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
-import Preloader from './../../../common/Preloader';
-import { TextField } from '@material-ui/core';
-import { addClientValidation } from '../clientDataFormProps';
-import { useRef } from 'react';
-import styles from './ClientPage.module.scss';
-import './../../../../assets/styles/main.scss';
-import classNames from 'classnames';
-import { transferActionData } from '../../../../store/reducers/actionsReducer';
-import { useContext } from 'react';
-import { AuthContext } from '../../../../context/authContext';
 import AddNavPanelTextButton from '../../../common/AddNavPanel/TextButton';
+import { addClientValidation } from '../clientDataFormProps';
+import './../../../../assets/styles/main.scss';
+import AddNavPanel from './../../../common/AddNavPanel';
+import Preloader from './../../../common/Preloader';
+import styles from './ClientPage.module.scss';
 
 const ClientPage = (props) => {
-  // debugger;
   const initValues = {
     surname: props.client.surname,
     name: props.client.name,
@@ -42,6 +36,7 @@ const ClientPage = (props) => {
     props.getCurrentClientData(clientId);
   }, []);
   const resetRef = useRef();
+
   return (
     <div>
       <AddNavPanel />
@@ -67,27 +62,21 @@ const ClientPage = (props) => {
                   form="client-edit-data-form"
                   text="Сохранить"
                 />
-                <button
-                  className={classNames(
-                    'c-add-nav-panel__text-button',
-                    'c-add-nav-panel__text-button_cancel'
-                  )}
+                <AddNavPanelTextButton
                   type="button"
                   onClick={() => {
                     setEditMode(false);
                     resetRef.current?.resetForm();
                   }}
-                >
-                  Отменить
-                </button>
+                  text="Отменить"
+                  className={styles.cancelButton}
+                />
               </div>
             ) : (
-              <button
+              <AddNavPanelTextButton
                 onClick={() => setEditMode(true)}
-                className="c-add-nav-panel__text-button"
-              >
-                Редактировать
-              </button>
+                text="Редактировать"
+              />
             )}
           </AddNavPanel>
           <Formik

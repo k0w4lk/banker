@@ -1,21 +1,20 @@
-import styles from './ActionsHistory.module.scss';
 import {
   Table,
-  TableRow,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
+  TableRow,
 } from '@material-ui/core';
-import './../../../../assets/styles/main.scss';
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getActionsData } from '../../../../store/reducers/actionsReducer';
-import { useContext } from 'react';
-import { AuthContext } from '../../../../context/authContext';
-import Preloader from './../../../common/Preloader';
-import emptyBox from './../../../../assets/images/empty-box.svg';
 import { makeStyles } from '@material-ui/styles';
+import { useContext, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { AuthContext } from '../../../../context/authContext';
+import { getActionsData } from '../../../../store/reducers/actionsReducer';
+import EmptyContainer from '../../../common/EmptyContainer/EmptyContainer';
+import './../../../../assets/styles/main.scss';
+import Preloader from './../../../common/Preloader';
+import styles from './ActionsHistory.module.scss';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -40,10 +39,7 @@ const ActionsHistory = (props) => {
   useEffect(() => {
     props.getActionsData({ id: user.uid });
   }, []);
-  const actions = [];
-  for (let action in props.actions) {
-    actions.push(props.actions[action]);
-  }
+  const actions = Object.values(props.actions);
   actions.reverse();
   return (
     <div className={styles.historyWrapper}>
@@ -52,7 +48,7 @@ const ActionsHistory = (props) => {
         <Preloader />
       ) : actions.length ? (
         <TableContainer className={classes.tableContainer}>
-          <Table>
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>Дата</TableCell>
@@ -72,14 +68,7 @@ const ActionsHistory = (props) => {
           </Table>
         </TableContainer>
       ) : (
-        <div className="c-empty-container__wrapper">
-          <img
-            src={emptyBox}
-            className="c-empty-container__img"
-            alt="empty icon"
-          />
-          <p className="c-empty-container__text">Действия отсутствуют</p>
-        </div>
+        <EmptyContainer text="Действия отсутствуют" />
       )}
     </div>
   );

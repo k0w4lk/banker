@@ -1,13 +1,15 @@
-import styles from './Authorization.module.scss';
-import authLogo from './../../assets/images/logo.svg';
-import { NavLink } from 'react-router-dom';
-import './../../assets/styles/main.scss';
-import { AuthContext } from '../../context/authContext.js';
-import { useContext } from 'react';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { REQUIRED_ERROR } from './../../context/authContext.js';
 import { TextField } from '@material-ui/core';
+import { Formik } from 'formik';
+import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import * as Yup from 'yup';
+import { AuthContext } from '../../context/authContext.js';
+import { REQUIRED_ERROR } from '../../errorMessages.js';
+import AuthRegContainer from '../AuthRegContainer/AuthRegContainer.jsx';
+import AuthRegHeading from '../AuthRegHeading/AuthRegHeading.jsx';
+import AuthRegLogo from '../AuthRegLogo/AuthRegLogo.jsx';
+import './../../assets/styles/main.scss';
+import styles from './Authorization.module.scss';
 
 const Authorization = (props) => {
   const {
@@ -18,12 +20,10 @@ const Authorization = (props) => {
     isAuthenticating,
   } = useContext(AuthContext);
   return (
-    <div className="l-auth-reg__wrapper">
+    <AuthRegContainer>
       <div className="l-auth-reg__form">
-        <img src={authLogo} className="l-auth-reg__logo" alt="auth-logo" />
-        <div className="l-auth-reg__heading-wrapper">
-          <h1 className="l-auth-reg__heading">АВТОРИЗАЦИЯ</h1>
-        </div>
+        <AuthRegLogo />
+        <AuthRegHeading heading="АВТОРИЗАЦИЯ" />
         <Formik
           initialValues={{
             email: '',
@@ -99,7 +99,7 @@ const Authorization = (props) => {
           </NavLink>
         </div>
       </div>
-    </div>
+    </AuthRegContainer>
   );
 };
 

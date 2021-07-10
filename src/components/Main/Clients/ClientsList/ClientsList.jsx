@@ -1,21 +1,21 @@
 import {
+  makeStyles,
   Table,
   TableBody,
-  TableHead,
-  TableRow,
   TableCell,
   TableContainer,
-  makeStyles,
+  TableHead,
+  TableRow,
 } from '@material-ui/core';
-import './../../../../assets/styles/main.scss';
-import styles from './ClientsList.module.scss';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { showClients } from '../../../../store/reducers/clientsReducer';
-import Preloader from './../../../common/Preloader';
-import toClientPage from './../../../../assets/images/to-client-page.svg';
 import { NavLink } from 'react-router-dom';
-import emptyBox from './../../../../assets/images/empty-box.svg';
+import { showClients } from '../../../../store/reducers/clientsReducer';
+import EmptyContainer from '../../../common/EmptyContainer/EmptyContainer';
+import toClientPage from './../../../../assets/images/to-client-page.svg';
+import './../../../../assets/styles/main.scss';
+import Preloader from './../../../common/Preloader';
+import styles from './ClientsList.module.scss';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -127,14 +127,7 @@ const ClientsList = (props) => {
             </Table>
           </TableContainer>
         ) : (
-          <div className="c-empty-container__wrapper">
-            <img
-              src={emptyBox}
-              className="c-empty-container__img"
-              alt="empty icon"
-            />
-            <p className="c-empty-container__text">Клиенты отсутствуют</p>
-          </div>
+          <EmptyContainer text="Клиенты отсутствуют" />
         )}
       </div>
     );
