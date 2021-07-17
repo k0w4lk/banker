@@ -1,42 +1,42 @@
-import { Formik } from 'formik';
-import { connect } from 'react-redux';
-import { TextField } from '@material-ui/core';
-import styles from './SearchClient.module.scss';
-import './../../../../assets/styles/main.scss';
-import classNames from 'classnames';
-import { setFilter } from '../../../../store/reducers/clientsReducer';
-import reset from './../../../../assets/images/reset-clients-filter.svg';
+import { Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { TextField } from "@material-ui/core";
+import styles from "./SearchClient.module.scss";
+import { setFilter } from "../../../../store/reducers/clientsReducer";
+import reset from "./../../../../assets/images/reset-clients-filter.svg";
+import ClientFormButton from "../../../common/ClientFormButton";
+import { getClients } from "./../../../../selectors/clientsSelectors";
 
 const SearchClient = (props) => {
+  const dispatch = useDispatch();
+  const clients = useSelector(getClients);
   return (
     <Formik
       initialValues={{
-        surname: '',
-        name: '',
-        patronymic: '',
-        id: '',
+        surname: "",
+        name: "",
+        patronymic: "",
+        id: "",
       }}
       onSubmit={(values) => {
         const filteredClients = {};
-        for (let client in props.clients) {
+        for (let client in clients) {
           if (
-            props.clients[client].surname
+            clients[client].surname
               .toLowerCase()
               .includes(values.surname.toLowerCase()) &&
-            props.clients[client].name
+            clients[client].name
               .toLowerCase()
               .includes(values.name.toLowerCase()) &&
-            props.clients[client].patronymic
+            clients[client].patronymic
               .toLowerCase()
               .includes(values.patronymic.toLowerCase()) &&
-            props.clients[client].id
-              .toLowerCase()
-              .includes(values.id.toLowerCase())
+            clients[client].id.toLowerCase().includes(values.id.toLowerCase())
           ) {
-            filteredClients[client] = props.clients[client];
+            filteredClients[client] = clients[client];
           }
         }
-        props.setFilter(filteredClients);
+        dispatch(setFilter(filteredClients));
         props.handleCloseSearchClient();
       }}
     >
@@ -46,10 +46,10 @@ const SearchClient = (props) => {
             <button
               className={styles.resetButton}
               onClick={() => {
-                formProps.setFieldValue('name', '');
-                formProps.setFieldValue('surname', '');
-                formProps.setFieldValue('patronymic', '');
-                formProps.setFieldValue('id', '');
+                formProps.setFieldValue("name", "");
+                formProps.setFieldValue("surname", "");
+                formProps.setFieldValue("patronymic", "");
+                formProps.setFieldValue("id", "");
               }}
             >
               <img
@@ -92,8 +92,8 @@ const SearchClient = (props) => {
                 onChange={formProps.handleChange}
               />
             </form>
-            <div className={'c-form__buttons-wrapper'}>
-              <button
+            <div className={styles.buttonsWrapper}>
+              <ClientFormButton
                 type="submit"
                 disabled={
                   !(
@@ -104,17 +104,15 @@ const SearchClient = (props) => {
                   )
                 }
                 form="search-client-form"
-                className={classNames('c-form__button', 'c-form__button_apply')}
-              >
-                Найти
-              </button>
-              <button
+                text="Найти"
+                buttonType="submit"
+              />
+              <ClientFormButton
                 type="button"
-                className={classNames('c-form__button', 'c-form_button_cancel')}
                 onClick={props.handleCloseSearchClient}
-              >
-                Отменить
-              </button>
+                text="Отменить"
+                buttonType="cancel"
+              />
             </div>
           </div>
         );
@@ -123,8 +121,4 @@ const SearchClient = (props) => {
   );
 };
 
-const mapDispatchToProps = (state) => ({
-  clients: state.clients.clients,
-});
-
-export default connect(mapDispatchToProps, { setFilter })(SearchClient);
+export default SearchClient;

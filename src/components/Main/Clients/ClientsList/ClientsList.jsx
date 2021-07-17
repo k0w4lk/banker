@@ -6,59 +6,71 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@material-ui/core';
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { showClients } from '../../../../store/reducers/clientsReducer';
-import EmptyContainer from '../../../common/EmptyContainer/EmptyContainer';
-import toClientPage from './../../../../assets/images/to-client-page.svg';
-import './../../../../assets/styles/main.scss';
-import Preloader from './../../../common/Preloader';
-import styles from './ClientsList.module.scss';
+} from "@material-ui/core";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import {
+  getClients,
+  getClientsIsFilteredStatus,
+  getClientsLoadingStatus,
+  getFilteredClients,
+} from "../../../../selectors/clientsSelectors";
+import { showClients } from "../../../../store/reducers/clientsReducer";
+import EmptyContainer from "../../../common/EmptyContainer/EmptyContainer";
+import toClientPage from "./../../../../assets/images/to-client-page.svg";
+import Preloader from "./../../../common/Preloader";
+import styles from "./ClientsList.module.scss";
 
 const useStyles = makeStyles({
   tableContainer: {
-    border: '1px solid #ccc',
-    maxWidth: '100vw',
-    height: '100%',
-    '&::-webkit-scrollbar': {
-      width: '6px',
-      height: '6px',
+    border: "1px solid #ccc",
+    maxWidth: "100vw",
+    height: "100%",
+    "&::-webkit-scrollbar": {
+      width: "6px",
+      height: "6px",
     },
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: '#C5DEFB',
-      borderRadius: '5px',
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "#C5DEFB",
+      borderRadius: "5px",
     },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#60A9E0',
-      borderRadius: '5px',
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#60A9E0",
+      borderRadius: "5px",
     },
   },
   tableCell: {
-    wordBreak: 'unset',
+    wordBreak: "unset",
   },
   table: {
-    overflow: 'auto',
-    width: '100%',
+    overflow: "auto",
+    width: "100%",
   },
 });
 
 const ClientsList = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const clients = useSelector(getClients);
+  const clientsLoadingStatus = useSelector(getClientsLoadingStatus);
+  const filteredClients = useSelector(getFilteredClients);
+  const isClientsFiltered = useSelector(getClientsIsFilteredStatus);
   useEffect(() => {
-    props.showClients();
+    dispatch(showClients());
   }, []);
-  const clients = props.isFilter
-    ? Object.values(props.filteredClients)
-    : Object.values(props.clients);
-  console.log(clients);
-  if (props.isClientsLoading) {
+
+  const clientsData = isClientsFiltered ? filteredClients : clients;
+  const clientsArr = [];
+  for (let client in clientsData) {
+    clientsArr.push({ data: clientsData[client], id: client });
+  }
+  if (clientsLoadingStatus) {
     return <Preloader />;
   } else {
     return (
       <div className={styles.clientsTableWrapper}>
-        {clients.length ? (
+        {clientsArr.length ? (
           <TableContainer className={classes.tableContainer}>
             <Table size="small" stickyHeader className={classes.table}>
               <TableHead>
@@ -85,41 +97,36 @@ const ClientsList = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {clients.map((client) => (
-                  <TableRow
-                    key={client.clientDatabaseId}
-                    style={{ height: 'max-content' }}
-                  >
+                {clientsArr.map((client) => (
+                  <TableRow key={client.id} style={{ height: "max-content" }}>
                     <TableCell>
-                      <NavLink
-                        to={`/main/clients/${client.clientDatabaseId}/data`}
-                      >
+                      <NavLink to={`/main/clients/${client.id}/data`}>
                         <img src={toClientPage} alt="user icon" />
                       </NavLink>
                     </TableCell>
-                    <TableCell>{client.surname}</TableCell>
-                    <TableCell>{client.name}</TableCell>
-                    <TableCell>{client.patronymic}</TableCell>
+                    <TableCell>{client.data.surname}</TableCell>
+                    <TableCell>{client.data.name}</TableCell>
+                    <TableCell>{client.data.patronymic}</TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.birthdate.split('-').reverse().join('.')}
+                      {client.data.birthdate?.split("-").reverse().join(".")}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.sex}
+                      {client.data.sex}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.id}
+                      {client.data.id}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.work}
+                      {client.data.work}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.phone}
+                      {client.data.phone}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.email}
+                      {client.data.email}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {client.address}
+                      {client.data.address}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -134,11 +141,4 @@ const ClientsList = (props) => {
   }
 };
 
-const mapStateToProps = (state) => ({
-  clients: state.clients.clients,
-  isClientsLoading: state.clients.isClientsLoading,
-  isFilter: state.clients.isFilter,
-  filteredClients: state.clients.filteredClients,
-});
-
-export default connect(mapStateToProps, { showClients })(ClientsList);
+export default ClientsList;

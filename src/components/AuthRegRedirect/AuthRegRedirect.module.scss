@@ -1,0 +1,16 @@
+.wrapper {
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.text {
+  color: #000;
+}
+
+.link {
+  color: #0437ba;
+  &:hover {
+    color: #4174f5;
+  }
+}

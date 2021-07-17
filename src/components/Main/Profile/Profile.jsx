@@ -1,27 +1,27 @@
-import { TextField } from '@material-ui/core';
-import { Formik } from 'formik';
-import { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as Yup from 'yup';
-import { AuthContext } from '../../../context/authContext.js';
-import { getCurrentUser } from '../../../selectors/profileSelectors.js';
-import { setUpdatedUserData } from '../../../store/reducers/profileReducer.js';
-import AddNavPanelTextButton from '../../common/AddNavPanel/TextButton/TextButton.jsx';
-import './../../../assets/styles/main.scss';
-
-import AddNavPanel from './../../common/AddNavPanel';
-import styles from './Profile.module.scss';
+import { TextField } from "@material-ui/core";
+import { Formik } from "formik";
+import { logOut } from "./../../../store/reducers/authReducer";
+import { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { AuthContext } from "../../../context/authContext.js";
+import { getCurrentUser } from "../../../selectors/profileSelectors.js";
+import { setUpdatedUserData } from "../../../store/reducers/profileReducer.js";
+import AddNavPanelTextButton from "../../common/AddNavPanel/TextButton";
+import AddNavPanel from "./../../common/AddNavPanel";
+import styles from "./Profile.module.scss";
 import {
   MAX_NAME_LENGTH,
   MAX_SURNAME_LENGTH,
   ONLY_CYRILLIC_SYMBOLS,
   REQUIRED_ERROR,
-} from '../../../errorMessages.js';
+} from "../../../errorMessages.js";
+import { transferActionData } from "../../../store/reducers/actionsReducer";
 
 const Profile = (props) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const profile = useSelector((state) => getCurrentUser(state));
-  const { handleLogout, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const dispatch = useDispatch();
   return (
     <div className={styles.profile__wrapper}>
@@ -41,7 +41,7 @@ const Profile = (props) => {
           />
         ) : null}
         <AddNavPanelTextButton
-          onClick={handleLogout}
+          onClick={() => dispatch(logOut())}
           type="button"
           text="ВЫЙТИ"
           className={styles.exitButton}
@@ -75,6 +75,14 @@ const Profile = (props) => {
               name: values.name,
               surname: values.surname,
               id: user.uid,
+            })
+          );
+          dispatch(
+            transferActionData({
+              id: user.uid,
+              date: new Date().toLocaleDateString("ru"),
+              time: new Date().toLocaleTimeString("ru"),
+              action: `Изменены даныне личного профиля ${values.name} ${values.surname}`,
             })
           );
           setIsEditMode(!isEditMode);

@@ -1,55 +1,62 @@
-import { TextField } from '@material-ui/core';
-import { Formik } from 'formik';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
-import { NavLink, useParams } from 'react-router-dom';
-import { AuthContext } from '../../../../context/authContext';
-import { transferActionData } from '../../../../store/reducers/actionsReducer';
+import { TextField } from "@material-ui/core";
+import { Formik } from "formik";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useParams } from "react-router-dom";
+import { AuthContext } from "../../../../context/authContext";
+import {
+  getClient,
+  getClientLoadingStatus,
+} from "../../../../selectors/clientSelectors";
+import { transferActionData } from "../../../../store/reducers/actionsReducer";
 import {
   getCurrentClientData,
   setCurrentClientData,
-} from '../../../../store/reducers/clientReducer';
-import AddNavPanelTextButton from '../../../common/AddNavPanel/TextButton';
-import { addClientValidation } from '../clientDataFormProps';
-import './../../../../assets/styles/main.scss';
-import AddNavPanel from './../../../common/AddNavPanel';
-import Preloader from './../../../common/Preloader';
-import styles from './ClientPage.module.scss';
+} from "../../../../store/reducers/clientReducer";
+import AddNavPanelTextButton from "../../../common/AddNavPanel/TextButton";
+import { addClientValidation } from "../clientDataFormProps";
+import AddNavPanel from "./../../../common/AddNavPanel";
+import Preloader from "./../../../common/Preloader";
+import styles from "./ClientPage.module.scss";
 
 const ClientPage = (props) => {
+  const dispatch = useDispatch();
+  const client = useSelector(getClient);
+  client.birthdate = client.birthdate.split(".").reverse().join("-") || "";
+  const isClientLoading = useSelector(getClientLoadingStatus);
   const initValues = {
-    surname: props.client.surname,
-    name: props.client.name,
-    patronymic: props.client.patronymic,
-    birthdate: props.client.birthdate.split('.').reverse().join('-') || '',
-    sex: props.client.sex,
-    id: props.client.id,
-    work: props.client.work,
-    phone: props.client.phone,
-    email: props.client.email,
-    address: props.client.address,
+    surname: client.surname,
+    name: client.name,
+    patronymic: client.patronymic,
+    birthdate: client.birthdate,
+    sex: client.sex,
+    id: client.id,
+    work: client.work,
+    phone: client.phone,
+    email: client.email,
+    address: client.address,
   };
   const { clientId } = useParams();
   const { user } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   useEffect(() => {
-    props.getCurrentClientData(clientId);
+    dispatch(getCurrentClientData(clientId));
   }, []);
   const resetRef = useRef();
 
   return (
     <div>
       <AddNavPanel />
-      {props.isClientLoading ? (
+      {isClientLoading ? (
         <Preloader />
       ) : (
         <>
-          <h1>{`${props.client.surname} ${props.client.name} ${props.client.patronymic}`}</h1>
+          <h1>{`${client.surname} ${client.name} ${client.patronymic}`}</h1>
           <div className={styles.tabsWrapper}>
             <NavLink
               to={`/main/clients/${clientId}/data`}
-              className="c-add-nav-panel__tab"
-              activeClassName="c-add-nav-panel__tab_active"
+              className={styles.clientNavigationItem}
+              activeClassName={styles.clientNavigationItemActive}
             >
               Данные
             </NavLink>
@@ -84,27 +91,36 @@ const ClientPage = (props) => {
             initialValues={initValues}
             validationSchema={addClientValidation()}
             onSubmit={(values) => {
-              props.setCurrentClientData({
-                clientDatabaseId: clientId,
-                client: {
-                  surname: values.surname,
-                  name: values.name,
-                  patronymic: values.patronymic,
-                  birthdate: values.birthdate,
-                  sex: values.sex,
-                  id: values.id,
-                  work: values.work,
-                  phone: values.phone,
-                  email: values.email,
-                  address: values.address,
-                },
-              });
-              props.transferActionData({
-                id: user.uid,
-                date: new Date().toLocaleDateString('ru'),
-                time: new Date().toLocaleTimeString('ru'),
-                action: `Изменена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
-              });
+              if (
+                Object.values(values).join("") !==
+                Object.values(client).join("")
+              ) {
+                dispatch(
+                  setCurrentClientData({
+                    clientDatabaseId: clientId,
+                    client: {
+                      surname: values.surname,
+                      name: values.name,
+                      patronymic: values.patronymic,
+                      birthdate: values.birthdate,
+                      sex: values.sex,
+                      id: values.id,
+                      work: values.work,
+                      phone: values.phone,
+                      email: values.email,
+                      address: values.address,
+                    },
+                  })
+                );
+                dispatch(
+                  transferActionData({
+                    id: user.uid,
+                    date: new Date().toLocaleDateString("ru"),
+                    time: new Date().toLocaleTimeString("ru"),
+                    action: `Изменена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
+                  })
+                );
+              }
               setEditMode(false);
             }}
           >
@@ -322,13 +338,4 @@ const ClientPage = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  client: state.client.client,
-  isClientLoading: state.client.isClientLoading,
-});
-
-export default connect(mapStateToProps, {
-  getCurrentClientData,
-  setCurrentClientData,
-  transferActionData,
-})(ClientPage);
+export default ClientPage;

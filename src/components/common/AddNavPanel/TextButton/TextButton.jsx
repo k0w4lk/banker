@@ -1,5 +1,5 @@
-import classNames from 'classnames';
-import styles from './TextButton.module.scss';
+import classNames from "classnames";
+import styles from "./TextButton.module.scss";
 
 const AddNavPanelTextButton = (props) => {
   const { text, className, ...restProps } = props;

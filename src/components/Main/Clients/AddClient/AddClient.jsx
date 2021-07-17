@@ -1,9 +1,7 @@
-import styles from './AddClient.module.scss';
-import './../../../../assets/styles/main.scss';
-import { Formik } from 'formik';
-import classNames from 'classnames';
-import { addClient } from './../../../../store/reducers/clientsReducer.js';
-import { connect, useStore } from 'react-redux';
+import styles from "./AddClient.module.scss";
+import { Formik } from "formik";
+import { addClient } from "./../../../../store/reducers/clientsReducer.js";
+import { useDispatch, useStore } from "react-redux";
 import {
   TextField,
   Select,
@@ -13,18 +11,20 @@ import {
   FormHelperText,
   ClickAwayListener,
   Tooltip,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
   addClientInitialValues,
   addClientValidation,
-} from '../clientDataFormProps';
-import { transferActionData } from '../../../../store/reducers/actionsReducer';
-import { useContext, useState } from 'react';
-import { AuthContext } from './../../../../context/authContext';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+} from "../clientDataFormProps";
+import { transferActionData } from "../../../../store/reducers/actionsReducer";
+import { useContext, useState } from "react";
+import { AuthContext } from "./../../../../context/authContext";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import ClientFormButton from "../../../common/ClientFormButton";
 
 const AddClient = (props) => {
   const store = useStore();
+  const dispatch = useDispatch();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const clientsData = store.getState().clients.clients;
@@ -38,24 +38,28 @@ const AddClient = (props) => {
         initialValues={addClientInitialValues}
         validationSchema={addClientValidation(ids)}
         onSubmit={(values) => {
-          props.addClient({
-            name: values.name,
-            surname: values.surname,
-            patronymic: values.patronymic,
-            birthdate: values.birthdate.split('-').reverse().join('.'),
-            sex: values.sex,
-            work: values.work,
-            id: values.id.toUpperCase(),
-            phone: values.phone,
-            email: values.email,
-            address: values.address,
-          });
-          props.transferActionData({
-            id: user.uid,
-            date: new Date().toLocaleDateString('ru'),
-            time: new Date().toLocaleTimeString('ru'),
-            action: `Заведена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
-          });
+          dispatch(
+            addClient({
+              name: values.name,
+              surname: values.surname,
+              patronymic: values.patronymic,
+              birthdate: values.birthdate.split("-").reverse().join("."),
+              sex: values.sex,
+              work: values.work,
+              id: values.id.toUpperCase(),
+              phone: values.phone,
+              email: values.email,
+              address: values.address,
+            })
+          );
+          dispatch(
+            transferActionData({
+              id: user.uid,
+              date: new Date().toLocaleDateString("ru"),
+              time: new Date().toLocaleTimeString("ru"),
+              action: `Заведена анкета клиента ${values.surname} ${values.name} ${values.patronymic} (ИН: ${values.id})`,
+            })
+          );
           props.handleCloseAddClient();
         }}
       >
@@ -259,24 +263,22 @@ const AddClient = (props) => {
           </div>
         )}
       </Formik>
-      <div className={'c-form__buttons-wrapper'}>
-        <button
-          className={classNames('c-form__button', 'c-form__button_apply')}
+      <div className={styles.buttonsWrapper}>
+        <ClientFormButton
           type="submit"
           form="add-client-form"
-        >
-          ДОБАВИТЬ
-        </button>
-        <button
-          className={classNames('c-form__button', 'c-form__button_cancel')}
+          text="ДОБАВИТЬ"
+          buttonType="submit"
+        />
+        <ClientFormButton
           type="button"
           onClick={props.handleCloseAddClient}
-        >
-          ОТМЕНИТЬ
-        </button>
+          text="ОТМЕНИТЬ"
+          buttonType="cancel"
+        />
       </div>
     </div>
   );
 };
 
-export default connect(null, { addClient, transferActionData })(AddClient);
+export default AddClient;

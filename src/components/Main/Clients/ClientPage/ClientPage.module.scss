@@ -46,3 +46,18 @@
     background-color: lighten($color: #ccc, $amount: 10%);
   }
 }
+
+.clientNavigationItem {
+  background-color: #ceebfc;
+  border: none;
+  border-radius: 10px 10px 0 0;
+  padding: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  &:visited {
+    color: #000;
+  }
+  &Active {
+    background-color: #9cd3fc;
+  }
+}

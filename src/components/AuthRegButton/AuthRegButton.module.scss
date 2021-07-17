@@ -1,0 +1,23 @@
+.button {
+  background-color: #44d9e6;
+  border: none;
+  margin: 20px auto 0;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 22px;
+  width: max-content;
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #50bbc5;
+  }
+  &:disabled {
+    background-color: #adeff5;
+    cursor: default;
+  }
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    font-size: 16px;
+  }
+}

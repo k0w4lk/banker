@@ -1,46 +1,49 @@
-import { TextField } from '@material-ui/core';
-import { Formik } from 'formik';
-import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import * as Yup from 'yup';
-import { AuthContext } from '../../context/authContext.js';
-import { REQUIRED_ERROR } from '../../errorMessages.js';
-import AuthRegContainer from '../AuthRegContainer/AuthRegContainer.jsx';
-import AuthRegHeading from '../AuthRegHeading/AuthRegHeading.jsx';
-import AuthRegLogo from '../AuthRegLogo/AuthRegLogo.jsx';
-import './../../assets/styles/main.scss';
-import styles from './Authorization.module.scss';
+import { TextField } from "@material-ui/core";
+import { Formik } from "formik";
+import { clearErrors } from "../../store/reducers/authReducer.js";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { REQUIRED_ERROR } from "../../errorMessages.js";
+import {
+  getAuthenticationStatus,
+  getEmailError,
+  getPasswordError,
+} from "../../selectors/authSelectors.js";
+import { logIn } from "../../store/reducers/authReducer.js";
+import AuthRegButton from "../AuthRegButton";
+import AuthRegContainer from "../AuthRegContainer";
+import AuthRegFormWrapper from "../AuthRegFormWrapper";
+import AuthRegHeading from "../AuthRegHeading";
+import AuthRegLogo from "../AuthRegLogo";
+import AuthRegRedirect from "../AuthRegRedirect";
+import styles from "./Authorization.module.scss";
 
 const Authorization = (props) => {
-  const {
-    handleLogin,
-    emailError,
-    passwordError,
-    clearErrors,
-    isAuthenticating,
-  } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const emailError = useSelector(getEmailError);
+  const passwordError = useSelector(getPasswordError);
+  const isAuthenticating = useSelector(getAuthenticationStatus);
   return (
     <AuthRegContainer>
-      <div className="l-auth-reg__form">
+      <AuthRegFormWrapper>
         <AuthRegLogo />
         <AuthRegHeading heading="АВТОРИЗАЦИЯ" />
         <Formik
           initialValues={{
-            email: '',
-            password: '',
+            email: "",
+            password: "",
           }}
           validationSchema={Yup.object({
             email: Yup.string().required(REQUIRED_ERROR),
             password: Yup.string().required(REQUIRED_ERROR),
           })}
           onSubmit={(values) => {
-            handleLogin(values.email, values.password);
+            dispatch(logIn(values.email, values.password));
           }}
         >
           {(props) => (
             <form className={styles.form} onSubmit={props.handleSubmit}>
               <TextField
-                className="l-auth-reg__input"
                 error={Boolean(
                   passwordError ||
                     emailError ||
@@ -50,18 +53,16 @@ const Authorization = (props) => {
                 autoFocus={true}
                 onChange={props.handleChange}
                 value={props.values.email}
-                onFocus={clearErrors}
                 name="email"
                 label="ЭЛЕКТРОННАЯ ПОЧТА"
                 helperText={`${
                   props.touched.email && props.errors.email
                     ? props.errors.email
-                    : ''
-                }\n${emailError ? emailError : ''}`}
+                    : ""
+                }\n${emailError ? emailError : ""}`}
               />
               <TextField
                 disabled={isAuthenticating}
-                className="l-auth-reg__input"
                 error={Boolean(
                   passwordError ||
                     (props.touched.password && props.errors.password)
@@ -69,36 +70,29 @@ const Authorization = (props) => {
                 value={props.values.password}
                 onChange={props.handleChange}
                 name="password"
-                onFocus={clearErrors}
                 label="ПАРОЛЬ"
                 type="password"
                 helperText={`${
                   props.touched.password && props.errors.password
                     ? props.errors.password
-                    : ''
-                }\n${passwordError ? passwordError : ''}`}
+                    : ""
+                }\n${passwordError ? passwordError : ""}`}
               />
-              <button
+              <AuthRegButton
                 type="submit"
                 disabled={isAuthenticating}
-                className="l-auth-reg__button"
-              >
-                ВОЙТИ
-              </button>
+                text="ВОЙТИ"
+              />
             </form>
           )}
         </Formik>
-        <div className="l-auth-reg__redirect">
-          <span className="l-auth-reg__text">НЕТ УЧЕТНОЙ ЗАПИСИ?&nbsp;</span>
-          <NavLink
-            onClick={clearErrors}
-            className="l-auth-reg__link"
-            to="/registration"
-          >
-            СОЗДАТЬ
-          </NavLink>
-        </div>
-      </div>
+        <AuthRegRedirect
+          to={"/registration"}
+          onLinkClickHandler={() => dispatch(clearErrors())}
+          text="НЕТ УЧЕТНОЙ ЗАПИСИ?"
+          linkText="СОЗДАТЬ"
+        />
+      </AuthRegFormWrapper>
     </AuthRegContainer>
   );
 };
