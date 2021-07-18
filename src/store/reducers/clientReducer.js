@@ -55,8 +55,10 @@ export const getCurrentClientData = (data) => (dispatch) => {
 };
 
 export const setCurrentClientData = (data) => (dispatch) => {
-  console.log(data);
-  firebase.database().ref(`/clients/${data.id}`).set(data.client);
+  firebase
+    .database()
+    .ref(`/clients/${data.client.clientDatabaseId}`)
+    .set(data.client);
   dispatch(setClientData(data.client));
 };
 
@@ -70,7 +72,7 @@ const clientReducer = (state = initialState, action) => {
     case GET_CLIENT_DATA:
       return {
         ...state,
-        client: action.payload.data,
+        client: { ...state.client, ...action.payload.data },
       };
     case SET_CLIENT_LOADING_STATUS:
       return {

@@ -1,85 +1,82 @@
 import {
+  makeStyles,
   Table,
-  TableRow,
   TableBody,
   TableCell,
   TableContainer,
+  TableRow,
   TextField,
-  makeStyles,
-} from '@material-ui/core';
-import './../../../../assets/styles/main.scss';
-import { useContext, useState } from 'react';
-import { connect } from 'react-redux';
-import styles from './Reminder.module.scss';
+} from "@material-ui/core";
+import { useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { AuthContext } from "../../../../context/authContext";
+import EmptyContainer from "../../../common/EmptyContainer/EmptyContainer";
 import {
   getTasksForCurrentDate,
   setTaskForCurrentDate,
-} from './../../../../store/reducers/calendarReminderReducer';
-import { useEffect } from 'react';
-import { AuthContext } from '../../../../context/authContext';
-import emptyBox from './../../../../assets/images/empty-box.svg';
-import Preloader from './../../../Main/common/Preloader';
+} from "./../../../../store/reducers/calendarReminderReducer";
+import Preloader from "./../../../common/Preloader";
+import styles from "./Reminder.module.scss";
 
 const useStyles = makeStyles({
   tableContainer: {
-    overflowY: 'auto',
-    width: '100%',
-    height: '100%',
-    '&::-webkit-scrollbar': {
-      width: '6px',
+    overflowY: "auto",
+    width: "100%",
+    height: "100%",
+    "&::-webkit-scrollbar": {
+      width: "6px",
     },
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: '#C5DEFB',
-      borderRadius: '5px',
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "#C5DEFB",
+      borderRadius: "5px",
     },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#60A9E0',
-      borderRadius: '5px',
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#60A9E0",
+      borderRadius: "5px",
     },
   },
   cell: {
-    whiteSpace: 'normal',
-    wordBreak: 'break-word',
+    whiteSpace: "normal",
+    wordBreak: "break-word",
   },
   input: {
-    width: '100%',
-    fontSize: '4em',
+    width: "100%",
+    fontSize: "4em",
   },
 });
 
 const Reminder = (props) => {
   const classes = useStyles();
-  const [task, setTask] = useState('');
+  const [task, setTask] = useState("");
   const [inputError, setInputError] = useState(false);
   const { user } = useContext(AuthContext);
-  const tasks = [];
-  for (let task in props.tasks) {
-    tasks.push({ task: props.tasks[task], id: task });
-  }
-
-  useEffect(() => {
-    props.getTasksForCurrentDate({
-      id: user.uid,
-      date: props.date.toLocaleDateString('ru').replaceAll('.', '-'),
-    });
-  }, []);
+  const tasks = Object.values(props.tasks);
+  const tasksIds = Object.keys(props.tasks);
 
   const onAddTaskHandler = () => {
     if (!task.trim().length) return;
     props.setTaskForCurrentDate({
       id: user.uid,
       task: task,
-      date: props.date.toLocaleDateString('ru').replaceAll('.', '-'),
+      date: props.date.toLocaleDateString("ru").replaceAll(".", "-"),
     });
-    setTask('');
+    setTask("");
   };
+  // eslint-disable-next-line
+  useEffect(() => {
+    props.getTasksForCurrentDate({
+      id: user.uid,
+      date: props.date.toLocaleDateString("ru").replaceAll(".", "-"),
+    });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.tableHeadingWrapper}>
         <div className={styles.tableHeading}>
           <h2 className={styles.heading}>Напоминания</h2>
-          <p className={styles.date}>{props.date.toLocaleDateString('ru')}</p>
+          <p className={styles.date}>{props.date.toLocaleDateString("ru")}</p>
         </div>
         {props.addTaskMode ? (
           <div className={styles.addTaskWrapper}>
@@ -91,14 +88,14 @@ const Reminder = (props) => {
               value={task}
               placeholder="Добавить напоминание"
               onKeyPress={(e) => {
-                if (e.code === 'Enter') onAddTaskHandler();
+                if (e.code === "Enter") onAddTaskHandler();
               }}
               onChange={(e) => {
                 setTask(e.target.value);
                 if (e.target.value.length === 100) setInputError(true);
                 else setInputError(false);
               }}
-              helperText={inputError ? 'Не более 100 символов' : null}
+              helperText={inputError ? "Не более 100 символов" : null}
             />
             <button
               className={styles.addTaskButton}
@@ -113,10 +110,10 @@ const Reminder = (props) => {
         <TableContainer className={classes.tableContainer}>
           <Table size="small" stickyHeader>
             <TableBody>
-              {tasks.map((task) => {
+              {tasks.map((task, i) => {
                 return (
-                  <TableRow key={task.id}>
-                    <TableCell className={classes.cell}>{task.task}</TableCell>
+                  <TableRow key={tasksIds[i]}>
+                    <TableCell className={classes.cell}>{task}</TableCell>
                   </TableRow>
                 );
               })}
@@ -124,14 +121,7 @@ const Reminder = (props) => {
           </Table>
         </TableContainer>
       ) : (
-        <div className="c-empty-container__wrapper">
-          <img
-            src={emptyBox}
-            className="c-empty-container__img"
-            alt="empty icon"
-          />
-          <p className="c-empty-container__text">Напоминаний нет</p>
-        </div>
+        <EmptyContainer text="Напоминания отсутствуют" />
       )}
     </div>
   );

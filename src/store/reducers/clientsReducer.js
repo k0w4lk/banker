@@ -1,10 +1,10 @@
-import { firebase } from './../../firebase';
+import { firebase } from "./../../firebase";
 
-const ADD_CLIENT = 'ADD_CLIENT';
-const GET_CLIENTS = 'GET_CLIENTS';
-const IS_CLIENTS_LOADING_STATUS = 'IS_CLIENTS_LOADING_STATUS';
-const SET_FILTERED_CLIENTS = 'SET_FILTERED_CLIENTS';
-const SET_FILTER_STATUS = 'SET_FILTER_STATUS';
+const ADD_CLIENT = "ADD_CLIENT";
+const GET_CLIENTS = "GET_CLIENTS";
+const IS_CLIENTS_LOADING_STATUS = "IS_CLIENTS_LOADING_STATUS";
+const SET_FILTERED_CLIENTS = "SET_FILTERED_CLIENTS";
+const SET_FILTER_STATUS = "SET_FILTER_STATUS";
 
 const initialState = {
   clients: {},
@@ -75,7 +75,7 @@ export const showClients = (data) => (dispatch) => {
   firebase
     .database()
     .ref(`/clients/`)
-    .once('value', (val) => {
+    .once("value", (val) => {
       dispatch(getClients({ ...val.val() }));
     })
     .then(() => {

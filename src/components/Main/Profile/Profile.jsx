@@ -1,64 +1,57 @@
-import { AuthContext } from '../../../context/authContext.js';
-import { useContext, useState } from 'react';
-import AddNavPanel from '../common/AddNavPanel/AddNavPanel.jsx';
-import styles from './Profile.module.scss';
-import './../../../assets/styles/main.scss';
-import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { setUpdatedUserData } from '../../../store/reducers/profileReducer.js';
-import { Formik } from 'formik';
-import { TextField } from '@material-ui/core';
-import * as Yup from 'yup';
+import { TextField } from "@material-ui/core";
+import { Formik } from "formik";
+import { logOut } from "./../../../store/reducers/authReducer";
+import { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { AuthContext } from "../../../context/authContext.js";
+import { getCurrentUser } from "../../../selectors/profileSelectors.js";
+import { setUpdatedUserData } from "../../../store/reducers/profileReducer.js";
+import AddNavPanelTextButton from "../../common/AddNavPanel/TextButton";
+import AddNavPanel from "./../../common/AddNavPanel";
+import styles from "./Profile.module.scss";
 import {
-  REQUIRED_ERROR,
   MAX_NAME_LENGTH,
   MAX_SURNAME_LENGTH,
-} from './../../../context/authContext';
-
-const ONLY_CYRILLIC_SYMBOLS = 'Доступны только символы кириллического алфавита';
+  ONLY_CYRILLIC_SYMBOLS,
+  REQUIRED_ERROR,
+} from "../../../errorMessages.js";
+import { transferActionData } from "../../../store/reducers/actionsReducer";
 
 const Profile = (props) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const { handleLogout, user } = useContext(AuthContext);
+  const profile = useSelector((state) => getCurrentUser(state));
+  const { user } = useContext(AuthContext);
+  const dispatch = useDispatch();
   return (
     <div className={styles.profile__wrapper}>
       <AddNavPanel>
-        <button
-          className="c-add-nav-panel__text-button"
+        <AddNavPanelTextButton
           type="button"
           disabled={isEditMode}
           onClick={() => setIsEditMode(true)}
-        >
-          РЕДАКТИРОВАТЬ
-        </button>
+          text="РЕДАКТИРОВАТЬ"
+        />
         {isEditMode ? (
-          <button
-            className={classNames(
-              'c-add-nav-panel__text-button',
-              styles.saveButton
-            )}
+          <AddNavPanelTextButton
             form="profile-data-form"
             type="submit"
-          >
-            СОХРАНИТЬ
-          </button>
+            text="СОХРАНИТЬ"
+            className={styles.saveButton}
+          />
         ) : null}
-        <button
-          className={classNames(
-            'c-add-nav-panel__text-button',
-            styles.profile__exitButton
-          )}
-          onClick={handleLogout}
+        <AddNavPanelTextButton
+          onClick={() => dispatch(logOut())}
           type="button"
-        >
-          ВЫЙТИ
-        </button>
+          text="ВЫЙТИ"
+          className={styles.exitButton}
+        />
       </AddNavPanel>
       <Formik
         initialValues={{
-          name: props.profile.name,
-          surname: props.profile.surname,
-          email: props.profile.email,
+          name: profile.name,
+          surname: profile.surname,
+          email: profile.email,
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -77,11 +70,21 @@ const Profile = (props) => {
             .required(REQUIRED_ERROR),
         })}
         onSubmit={(values) => {
-          props.setUpdatedUserData({
-            name: values.name,
-            surname: values.surname,
-            id: user.uid,
-          });
+          dispatch(
+            setUpdatedUserData({
+              name: values.name,
+              surname: values.surname,
+              id: user.uid,
+            })
+          );
+          dispatch(
+            transferActionData({
+              id: user.uid,
+              date: new Date().toLocaleDateString("ru"),
+              time: new Date().toLocaleTimeString("ru"),
+              action: `Изменены даныне личного профиля ${values.name} ${values.surname}`,
+            })
+          );
           setIsEditMode(!isEditMode);
         }}
       >
@@ -136,8 +139,4 @@ const Profile = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  profile: state.currentUser,
-});
-
-export default connect(mapStateToProps, { setUpdatedUserData })(Profile);
+export default Profile;
