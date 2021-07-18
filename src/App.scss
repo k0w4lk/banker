@@ -1,0 +1,9 @@
+.App {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  @media screen and (max-width: 700px) {
+    height: -webkit-fill-available;
+    align-items: center;
+  }
+}

@@ -1,11 +1,11 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
-import './App.css';
-import { AuthContext } from './context/authContext';
-import { useContext } from 'react';
-import Authorization from './components/Authorization';
-import Registration from './components/Registration';
-import Main from './components/Main';
-import Preloader from './components/Main/common/Preloader';
+import { Redirect, Route, Switch } from "react-router-dom";
+import "./App.scss";
+import { AuthContext } from "./context/authContext";
+import { useContext } from "react";
+import Authorization from "./components/Authorization";
+import Registration from "./components/Registration";
+import Main from "./components/Main";
+import Preloader from "./components/common/Preloader";
 
 function App() {
   const { user, isCheckingForUser } = useContext(AuthContext);

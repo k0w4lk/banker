@@ -1,0 +1,29 @@
+.button {
+  padding: 10px 12px;
+  border: none;
+  cursor: pointer;
+  &:not(:first-child) {
+    margin-left: 40px;
+  }
+
+  &Submit {
+    background-color: #44d9e6;
+    &:hover {
+      background-color: darken($color: #44d9e6, $amount: 10%);
+    }
+    &:disabled {
+      background-color: #44d9e6;
+      cursor: default;
+    }
+  }
+  &Cancel {
+    background-color: #c4c4c4;
+    &:hover {
+      background-color: darken($color: #c4c4c4, $amount: 10%);
+    }
+    &:disabled {
+      background-color: #c4c4c4;
+      cursor: default;
+    }
+  }
+}

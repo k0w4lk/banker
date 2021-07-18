@@ -1,16 +1,19 @@
-import AddNavPanel from '../common/AddNavPanel/AddNavPanel.jsx';
-import Dialog from '@material-ui/core/Dialog';
-import styles from './Clients.module.scss';
-import './../../../assets/styles/main.scss';
-import classNames from 'classnames';
-import { useState } from 'react';
-import AddClient from './AddClient';
-import ClientsList from './ClientsList';
-import SearchClient from './SearchClient';
-import { connect } from 'react-redux';
-import { showClients } from '../../../store/reducers/clientsReducer.js';
+import Dialog from "@material-ui/core/Dialog";
+import classNames from "classnames";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getClientsIsFilteredStatus } from "../../../selectors/clientsSelectors";
+import { showClients } from "../../../store/reducers/clientsReducer.js";
+import AddNavPanelTextButton from "../../common/AddNavPanel/TextButton";
+import AddNavPanel from "./../../common/AddNavPanel";
+import AddClient from "./AddClient";
+import styles from "./Clients.module.scss";
+import ClientsList from "./ClientsList";
+import SearchClient from "./SearchClient";
 
 const Clients = (props) => {
+  const isClientsFiltered = useSelector(getClientsIsFilteredStatus);
+  const dispatch = useDispatch();
   const [openAddClient, setOpenAddClient] = useState(false);
   const handleClickOpenAddClient = () => {
     setOpenAddClient(true);
@@ -38,13 +41,11 @@ const Clients = (props) => {
           onClick={handleClickOpenAddClient}
           className={classNames(styles.addClientButton, styles.panelButton)}
         ></button>
-        {props.isFilter ? (
-          <button
-            className="c-add-nav-panel__text-button"
-            onClick={props.showClients}
-          >
-            Очистить фильтр
-          </button>
+        {isClientsFiltered ? (
+          <AddNavPanelTextButton
+            text="Очистить фильтр"
+            onClick={() => dispatch(showClients())}
+          />
         ) : null}
       </AddNavPanel>
       <ClientsList />
@@ -58,8 +59,4 @@ const Clients = (props) => {
   );
 };
 
-const mapDispatchToProps = (state) => ({
-  isFilter: state.clients.isFilter,
-});
-
-export default connect(mapDispatchToProps, { showClients })(Clients);
+export default Clients;

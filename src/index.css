@@ -3,11 +3,6 @@
   src: url('./assets/fonts/Montserrat/Montserrat-Regular.ttf');
 }
 
-@font-face {
-  font-family: 'PT Mono';
-  src: url('./assets/fonts/PT_Mono/PTMono-Regular.ttf');
-}
-
 *,
 *::after,
 *::before {
