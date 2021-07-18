@@ -16,7 +16,7 @@ import AuthRegFormWrapper from "../AuthRegFormWrapper";
 import AuthRegHeading from "../AuthRegHeading";
 import AuthRegLogo from "../AuthRegLogo";
 import AuthRegRedirect from "../AuthRegRedirect";
-import styles from "./Authorization.module.scss";
+import AuthRegForm from "../AuthRegForm/AuthRegForm.jsx";
 
 const Authorization = (props) => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const Authorization = (props) => {
           }}
         >
           {(props) => (
-            <form className={styles.form} onSubmit={props.handleSubmit}>
+            <AuthRegForm onSubmit={props.handleSubmit}>
               <TextField
                 error={Boolean(
                   passwordError ||
@@ -83,7 +83,7 @@ const Authorization = (props) => {
                 disabled={isAuthenticating}
                 text="ВОЙТИ"
               />
-            </form>
+            </AuthRegForm>
           )}
         </Formik>
         <AuthRegRedirect

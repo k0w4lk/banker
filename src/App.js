@@ -1,5 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import { AuthContext } from "./context/authContext";
 import { useContext } from "react";
 import Authorization from "./components/Authorization";

@@ -62,12 +62,13 @@ const Reminder = (props) => {
     });
     setTask("");
   };
-
+  // eslint-disable-next-line
   useEffect(() => {
     props.getTasksForCurrentDate({
       id: user.uid,
       date: props.date.toLocaleDateString("ru").replaceAll(".", "-"),
     });
+    // eslint-disable-next-line
   }, []);
 
   return (

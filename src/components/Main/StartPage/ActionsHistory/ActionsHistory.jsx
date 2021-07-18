@@ -44,6 +44,7 @@ const ActionsHistory = (props) => {
   const { user } = useContext(AuthContext);
   useEffect(() => {
     dispatch(getActionsData({ id: user.uid }));
+    // eslint-disable-next-line
   }, []);
   const actionsArr = Object.values(actions);
   actionsArr.reverse();

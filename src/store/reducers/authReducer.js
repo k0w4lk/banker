@@ -84,7 +84,6 @@ const setPasswordError = (error) => ({
 export const registration = (email, password, name, surname) => (dispatch) => {
   dispatch(clearErrors());
   dispatch(setAuthenticatingStatus(true));
-  console.log(email, password, name, surname);
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -110,7 +109,6 @@ export const registration = (email, password, name, surname) => (dispatch) => {
     });
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      console.log(user.uid);
       db.ref(`/users/${user.uid}`).set({
         name,
         surname,

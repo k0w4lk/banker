@@ -10,7 +10,6 @@ const Auth = (props) => {
   const [isCheckingForUser, setIsCheckingForUser] = useState(false);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     setIsCheckingForUser(true);
     firebase.auth().onAuthStateChanged((user) => {
@@ -22,6 +21,7 @@ const Auth = (props) => {
       }
       setIsCheckingForUser(false);
     });
+    // eslint-disable-next-line
   }, []);
 
   return (

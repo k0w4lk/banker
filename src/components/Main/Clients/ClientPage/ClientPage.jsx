@@ -41,6 +41,7 @@ const ClientPage = (props) => {
   const [editMode, setEditMode] = useState(false);
   useEffect(() => {
     dispatch(getCurrentClientData(clientId));
+    // eslint-disable-next-line
   }, []);
   const resetRef = useRef();
 

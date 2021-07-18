@@ -10,6 +10,7 @@ import {
 import { clearErrors, registration } from "../../store/reducers/authReducer.js";
 import AuthRegButton from "../AuthRegButton/";
 import AuthRegContainer from "../AuthRegContainer";
+import AuthRegForm from "../AuthRegForm/AuthRegForm.jsx";
 import AuthRegFormWrapper from "../AuthRegFormWrapper";
 import AuthRegHeading from "../AuthRegHeading";
 import AuthRegLogo from "../AuthRegLogo";
@@ -78,86 +79,79 @@ const Registration = () => {
           }}
         >
           {(props) => (
-            <form className={styles.form} onSubmit={props.handleSubmit}>
-              <div className={styles.inputsWrapper}>
-                <TextField
-                  error={Boolean(props.touched.name && props.errors.name)}
-                  label="ИМЯ"
-                  value={props.values.name}
-                  onChange={props.handleChange}
-                  name="name"
-                  helperText={
-                    props.touched.name && props.errors.name
-                      ? props.errors.name
-                      : null
-                  }
-                />
-                <TextField
-                  error={Boolean(props.touched.surname && props.errors.surname)}
-                  label="ФАМИЛИЯ"
-                  value={props.values.surname}
-                  onChange={props.handleChange}
-                  name="surname"
-                  helperText={
-                    props.touched.surname && props.errors.surname
-                      ? props.errors.surname
-                      : null
-                  }
-                />
-                <TextField
-                  error={Boolean(
-                    emailError || (props.touched.email && props.errors.email)
-                  )}
-                  value={props.values.email}
-                  onChange={props.handleChange}
-                  // onFocus={dispatch(clearErrors())}
-                  label="ЭЛЕКТРОННАЯ ПОЧТА"
-                  name="email"
-                  helperText={`${
-                    props.touched.email && props.errors.email
-                      ? props.errors.email
-                      : ""
-                  }\n${emailError ? emailError : ""}`}
-                />
-                <TextField
-                  error={Boolean(
-                    props.touched.password && props.errors.password
-                  )}
-                  value={props.values.password}
-                  type="password"
-                  label="ПАРОЛЬ"
-                  onChange={props.handleChange}
-                  name="password"
-                  helperText={
-                    props.touched.password && props.errors.password
-                      ? props.errors.password
-                      : null
-                  }
-                />
-                <TextField
-                  error={Boolean(
-                    props.touched.confirmPassword &&
-                      props.errors.confirmPassword
-                  )}
-                  type="password"
-                  label="ПОДТВЕРДИТЕ ПАРОЛЬ"
-                  value={props.values.confirmPassword}
-                  onChange={props.handleChange}
-                  name="confirmPassword"
-                  helperText={
-                    props.touched.confirmPassword &&
-                    props.errors.confirmPassword
-                      ? props.errors.confirmPassword
-                      : null
-                  }
-                />
-              </div>
+            <AuthRegForm onSubmit={props.handleSubmit}>
+              <TextField
+                error={Boolean(props.touched.name && props.errors.name)}
+                label="ИМЯ"
+                value={props.values.name}
+                onChange={props.handleChange}
+                name="name"
+                helperText={
+                  props.touched.name && props.errors.name
+                    ? props.errors.name
+                    : null
+                }
+              />
+              <TextField
+                error={Boolean(props.touched.surname && props.errors.surname)}
+                label="ФАМИЛИЯ"
+                value={props.values.surname}
+                onChange={props.handleChange}
+                name="surname"
+                helperText={
+                  props.touched.surname && props.errors.surname
+                    ? props.errors.surname
+                    : null
+                }
+              />
+              <TextField
+                error={Boolean(
+                  emailError || (props.touched.email && props.errors.email)
+                )}
+                value={props.values.email}
+                onChange={props.handleChange}
+                label="ЭЛЕКТРОННАЯ ПОЧТА"
+                name="email"
+                helperText={`${
+                  props.touched.email && props.errors.email
+                    ? props.errors.email
+                    : ""
+                }\n${emailError ? emailError : ""}`}
+              />
+              <TextField
+                error={Boolean(props.touched.password && props.errors.password)}
+                value={props.values.password}
+                type="password"
+                label="ПАРОЛЬ"
+                onChange={props.handleChange}
+                name="password"
+                helperText={
+                  props.touched.password && props.errors.password
+                    ? props.errors.password
+                    : null
+                }
+              />
+              <TextField
+                error={Boolean(
+                  props.touched.confirmPassword && props.errors.confirmPassword
+                )}
+                type="password"
+                label="ПОДТВЕРДИТЕ ПАРОЛЬ"
+                value={props.values.confirmPassword}
+                onChange={props.handleChange}
+                name="confirmPassword"
+                helperText={
+                  props.touched.confirmPassword && props.errors.confirmPassword
+                    ? props.errors.confirmPassword
+                    : null
+                }
+              />
               <AuthRegButton
                 text="ЗАРЕГИСТРИРОВАТЬСЯ"
                 type="submit"
                 disabled={isAuthenticating}
               />
-            </form>
+            </AuthRegForm>
           )}
         </Formik>
         <AuthRegRedirect

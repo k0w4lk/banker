@@ -58,6 +58,7 @@ const ClientsList = (props) => {
   const isClientsFiltered = useSelector(getClientsIsFilteredStatus);
   useEffect(() => {
     dispatch(showClients());
+    // eslint-disable-next-line
   }, []);
 
   const clientsData = isClientsFiltered ? filteredClients : clients;
