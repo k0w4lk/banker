@@ -72,8 +72,8 @@ const Registration = () => {
               registration(
                 values.email,
                 values.password,
-                values.name,
-                values.surname
+                values.name.trim(),
+                values.surname.trim()
               )
             );
           }}

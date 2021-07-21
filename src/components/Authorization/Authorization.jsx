@@ -76,7 +76,8 @@ const Authorization = (props) => {
                   props.touched.password && props.errors.password
                     ? props.errors.password
                     : ""
-                }\n${passwordError ? passwordError : ""}`}
+                }
+                ${passwordError ? passwordError : ""}`}
               />
               <AuthRegButton
                 type="submit"

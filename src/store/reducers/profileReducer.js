@@ -1,7 +1,7 @@
-import { firebase } from './../../firebase';
+import { firebase } from "./../../firebase";
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
+const SET_USER_DATA = "SET_USER_DATA";
+const UPDATE_USER_DATA = "UPDATE_USER_DATA";
 
 const initialState = {
   name: null,
@@ -20,7 +20,12 @@ const profileReducer = (state = initialState, action) => {
         email: action.payload.email,
         id: action.payload.id,
       };
-
+    case UPDATE_USER_DATA:
+      return {
+        ...state,
+        name: action.payload.name,
+        surname: action.payload.surname,
+      };
     default:
       return state;
   }
@@ -54,7 +59,7 @@ export const setUserId = (id) => (dispatch) => {
   firebase
     .database()
     .ref(`/users/${id}`)
-    .once('value', (val) => {
+    .once("value", (val) => {
       dispatch(setUserData({ ...val.val(), id }));
     });
 };

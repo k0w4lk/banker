@@ -15,14 +15,16 @@ export const registrationValidation = Yup.object({
       MAX_NAME_LENGTH,
       `Имя должно иметь не более ${MAX_NAME_LENGTH} символов`
     )
-    .matches(/^[А-Яа-я]+$/, ONLY_CYRILLIC_SYMBOLS)
+    .trim()
+    .matches(/^[А-Яа-яЁё]+$/, ONLY_CYRILLIC_SYMBOLS)
     .required(REQUIRED_ERROR),
   surname: Yup.string()
     .max(
       MAX_NAME_LENGTH,
       `Фамилия должна иметь не более ${MAX_SURNAME_LENGTH} символов`
     )
-    .matches(/^[А-Яа-я]+$/, ONLY_CYRILLIC_SYMBOLS)
+    .trim()
+    .matches(/^[А-Яа-яЁё]+$/, ONLY_CYRILLIC_SYMBOLS)
     .required(REQUIRED_ERROR),
   email: Yup.string().email(INVALID_EMAIL_ERROR).required(REQUIRED_ERROR),
   password: Yup.string()
