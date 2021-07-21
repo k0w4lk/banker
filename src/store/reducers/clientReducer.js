@@ -1,21 +1,21 @@
-import { firebase } from './../../firebase';
+import { firebase } from "./../../firebase";
 
-const SET_CLIENT_DATA = 'SET_CLIENT_DATA';
-const GET_CLIENT_DATA = 'GET_CLIENT_DATA';
-const SET_CLIENT_LOADING_STATUS = 'SET_CLIENT_LOADING_STATUS';
+const SET_CLIENT_DATA = "SET_CLIENT_DATA";
+const GET_CLIENT_DATA = "GET_CLIENT_DATA";
+const SET_CLIENT_LOADING_STATUS = "SET_CLIENT_LOADING_STATUS";
 
 const initialState = {
   client: {
-    surname: '',
-    name: '',
-    patronymic: '',
-    birthdate: '',
-    sex: '',
-    id: '',
-    work: '',
-    phone: '',
-    email: '',
-    address: '',
+    surname: "",
+    name: "",
+    patronymic: "",
+    birthdate: "",
+    sex: "",
+    id: "",
+    work: "",
+    phone: "",
+    email: "",
+    address: "",
   },
   isClientLoading: true,
 };
@@ -46,7 +46,7 @@ export const getCurrentClientData = (data) => (dispatch) => {
   firebase
     .database()
     .ref(`/clients/${data}`)
-    .once('value', (val) => {
+    .once("value", (val) => {
       dispatch(getClientData({ ...val.val() }));
     })
     .then(() => {
@@ -55,10 +55,7 @@ export const getCurrentClientData = (data) => (dispatch) => {
 };
 
 export const setCurrentClientData = (data) => (dispatch) => {
-  firebase
-    .database()
-    .ref(`/clients/${data.client.clientDatabaseId}`)
-    .set(data.client);
+  firebase.database().ref(`/clients/${data.clientDatabaseId}`).set(data.client);
   dispatch(setClientData(data.client));
 };
 
